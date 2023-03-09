@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class SimulationEngine {
 
     public List<Shop> simulatePurchaseProcess(List<Shop> shops, Customer customer) {
-        resetShopScores(shops);
+        shops = resetShopScores(shops);
         Shop chosenShop = simulateShopChoice(shops, customer);
 
         for (Shop shop : shops) {
