@@ -1,5 +1,6 @@
 package vu.bakalauras.simulation;
 
+import vu.bakalauras.simulation.model.customer.CriteriaImportance;
 import vu.bakalauras.simulation.model.customer.Customer;
 import vu.bakalauras.simulation.model.customer.CustomerCriteria;
 import vu.bakalauras.simulation.model.shop.Shop;
@@ -10,19 +11,27 @@ import java.util.stream.Collectors;
 
 public class SimulationEngine {
 
-    public void simulatePurchaseProcess(List<Shop> shops, Customer customer) {
+    public List<Shop> simulatePurchaseProcess(List<Shop> shops, Customer customer) {
         resetShopScores(shops);
         Shop chosenShop = simulateShopChoice(shops, customer);
+
+        for (Shop shop : shops) {
+            if (shop.name.equals(chosenShop.name)) {
+                shop.totalSales += simulatePurchase(chosenShop.score);
+            }
+        }
+
+        return shops;
     }
 
     public Shop simulateShopChoice(List<Shop> shops, Customer customer) {
-        shops.forEach(shop -> shop.score = getShopScore(shop.criteria, customer.criteria, true));
+        shops.forEach(shop -> shop.score = getShopScore(shop.criteria, customer.criteria, CriteriaImportance.MANDATORY));
 
         double shopsMaxScore = getMax(shops);
         List<Shop> chosenShops = shops.stream().filter(s -> s.score == shopsMaxScore).collect(Collectors.toList());
 
         if (chosenShops.size() > 1) {
-            chosenShops.forEach(shop -> shop.score = getShopScore(shop.criteria, customer.criteria, false));
+            chosenShops.forEach(shop -> shop.score += getShopScore(shop.criteria, customer.criteria, CriteriaImportance.OPTIONAL));
 
             double chosenShopsMaxScore = getMax(chosenShops);
             return chosenShops.stream().filter(shop -> shop.score == chosenShopsMaxScore).findFirst().orElse(null);
@@ -31,15 +40,36 @@ public class SimulationEngine {
         }
     }
 
-    public double getShopScore(List<ShopCriteria> shopCriteria, List<CustomerCriteria> customerCriteria, boolean simulateMandatory) {
-        return 1;
+    public double getShopScore(List<ShopCriteria> shopCriteria, List<CustomerCriteria> customerCriteria, CriteriaImportance criteriaImportance) {
+        List<CustomerCriteria> filteredCustomerCriteria = customerCriteria
+                .stream()
+                .filter(c -> c.criteriaImportance == criteriaImportance)
+                .collect(Collectors.toList());
+        double totalShopCriteriaScore = shopCriteria.stream().map(s -> s.criteriaWeight.rating).reduce(0, Integer::sum);
+
+        double shopScore = 0;
+        for (CustomerCriteria custCriteria : filteredCustomerCriteria) {
+            List<ShopCriteria> filteredCriteriaByCategory = shopCriteria
+                    .stream()
+                    .filter(s -> s.categories.contains(custCriteria.category))
+                    .collect(Collectors.toList());
+
+            shopScore += getCriteriaScore(filteredCriteriaByCategory, totalShopCriteriaScore);
+        }
+
+        return shopScore;
     }
 
-    public double getCriteriaScore() {
-        return 0;
+    public double getCriteriaScore(List<ShopCriteria> filteredShopCriteria, double totalCriteriaScore) {
+        double totalScore = filteredShopCriteria.stream().map(s -> s.criteriaWeight.rating).reduce(0, Integer::sum);
+
+        return totalScore / totalCriteriaScore;
     }
 
-    public int simulatePurchase() {
+    public int simulatePurchase(double shopScore) {
+        if (shopScore + Math.random() > 1.61) {
+            return 1;
+        }
         return 0;
     }
 
