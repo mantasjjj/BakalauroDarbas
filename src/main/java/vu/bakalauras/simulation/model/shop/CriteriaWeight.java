@@ -2,12 +2,12 @@ package vu.bakalauras.simulation.model.shop;
 
 public enum CriteriaWeight {
 
-    HIGHEST(0), //todo: fix
+    HIGHEST(1000),
     HIGH(30),
     MEDIUM(10),
     LOW(2),
     NONE(0),
-    AD(30); //todo: fix
+    AD(30);
 
     public final int rating;
 

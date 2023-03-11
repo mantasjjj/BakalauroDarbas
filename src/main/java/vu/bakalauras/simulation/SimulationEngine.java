@@ -20,18 +20,17 @@ public class SimulationEngine {
                 shop.totalSales += simulatePurchase(chosenShop.score);
             }
         }
-
         return shops;
     }
 
     public Shop simulateShopChoice(List<Shop> shops, Customer customer) {
-        shops.forEach(shop -> shop.score = getShopScore(shop.criteria, customer.criteria, CriteriaImportance.MANDATORY));
-
+        shops.forEach(shop -> shop.score = getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.MANDATORY, shop.highCriteriaCount));
         double shopsMaxScore = getMax(shops);
+
         List<Shop> chosenShops = shops.stream().filter(s -> s.score == shopsMaxScore).collect(Collectors.toList());
 
         if (chosenShops.size() > 1) {
-            chosenShops.forEach(shop -> shop.score += getShopScore(shop.criteria, customer.criteria, CriteriaImportance.OPTIONAL));
+            chosenShops.forEach(shop -> shop.score += getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.OPTIONAL, shop.highCriteriaCount));
 
             double chosenShopsMaxScore = getMax(chosenShops);
             return chosenShops.stream().filter(shop -> shop.score == chosenShopsMaxScore).findFirst().orElse(null);
@@ -40,13 +39,14 @@ public class SimulationEngine {
         }
     }
 
-    public double getShopScore(List<ShopCriteria> shopCriteria, List<CustomerCriteria> customerCriteria, CriteriaImportance criteriaImportance) {
+    public double getShopScore(List<ShopCriteria> shopCriteria, List<CustomerCriteria> customerCriteria,
+                               CriteriaImportance criteriaImportance, int highCriteriaCount) {
         List<CustomerCriteria> filteredCustomerCriteria = customerCriteria
                 .stream()
                 .filter(c -> c.criteriaImportance == criteriaImportance)
                 .collect(Collectors.toList());
-        double totalShopCriteriaScore = shopCriteria.stream().map(s -> s.criteriaWeight.rating).reduce(0, Integer::sum);
 
+        double totalShopCriteriaScore = shopCriteria.stream().map(s -> s.criteriaWeight.rating).reduce(0, Integer::sum);
         double shopScore = 0;
         for (CustomerCriteria custCriteria : filteredCustomerCriteria) {
             List<ShopCriteria> filteredCriteriaByCategory = shopCriteria
@@ -54,15 +54,13 @@ public class SimulationEngine {
                     .filter(s -> s.categories.contains(custCriteria.category))
                     .collect(Collectors.toList());
 
-            shopScore += getCriteriaScore(filteredCriteriaByCategory, totalShopCriteriaScore);
+            shopScore += getCriteriaScore(filteredCriteriaByCategory, highCriteriaCount, totalShopCriteriaScore);
         }
-
         return shopScore;
     }
 
-    public double getCriteriaScore(List<ShopCriteria> filteredShopCriteria, double totalCriteriaScore) {
-        double totalScore = filteredShopCriteria.stream().map(s -> s.criteriaWeight.rating).reduce(0, Integer::sum);
-
+    public double getCriteriaScore(List<ShopCriteria> filteredShopCriteria, int highCriteriaCount, double totalCriteriaScore) {
+        double totalScore = filteredShopCriteria.stream().map(s -> s.getCriteriaWeightRating(highCriteriaCount)).reduce(0, Integer::sum);
         return totalScore / totalCriteriaScore;
     }
 
@@ -80,13 +78,11 @@ public class SimulationEngine {
 
     private double getMax(List<Shop> shops) {
         double max = -1;
-
         for (Shop shop : shops) {
             if (shop.score > max) {
                 max = shop.score;
             }
         }
-
         return max;
     }
 }

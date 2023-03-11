@@ -1,9 +1,20 @@
 package vu.bakalauras.simulation.model.customer;
 
-import vu.bakalauras.simulation.model.shop.ShopCriteria;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Getter
+@Setter
 public class Customer {
-    public List<CustomerCriteria> criteria;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    public List<CustomerCriteria> customerCriteria;
 }
