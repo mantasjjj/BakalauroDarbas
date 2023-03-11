@@ -1,5 +1,6 @@
-package vu.bakalauras.simulation;
+package vu.bakalauras.simulation.service;
 
+import org.springframework.stereotype.Service;
 import vu.bakalauras.simulation.model.customer.CriteriaImportance;
 import vu.bakalauras.simulation.model.customer.Customer;
 import vu.bakalauras.simulation.model.customer.CustomerCriteria;
@@ -9,7 +10,8 @@ import vu.bakalauras.simulation.model.shop.ShopCriteria;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SimulationEngine {
+@Service
+public class SimulationService {
 
     public List<Shop> simulatePurchaseProcess(List<Shop> shops, Customer customer) {
         shops = resetShopScores(shops);

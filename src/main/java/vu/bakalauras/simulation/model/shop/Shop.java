@@ -26,4 +26,5 @@ public class Shop {
     public List<Seller> sellers;
     public int totalSales;
     public double score;
+    public boolean mostSales;
 }

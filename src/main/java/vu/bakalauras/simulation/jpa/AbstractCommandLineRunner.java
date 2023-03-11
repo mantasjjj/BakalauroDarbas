@@ -22,10 +22,14 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
     public void run(String... args) {
 
         List<Customer> customers = fillCustomers();
-        customers.forEach(c -> customerService.add(c));
+        if (customers != null) {
+            customers.forEach(c -> customerService.add(c));
+        }
 
-        List<Shop> eshops = fillShops();
-        eshops.forEach(e -> shopService.add(e));
+        List<Shop> shops = fillShops();
+        if (shops != null) {
+            shops.forEach(s -> shopService.add(s));
+        }
     }
 
     public List<Customer> fillCustomers() {
