@@ -13,9 +13,17 @@ public class CustomerCriteria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    public String name;
     @Enumerated
     public Category category;
     @Enumerated
     public CriteriaImportance criteriaImportance;
+
+    public CustomerCriteria() {
+
+    }
+
+    public CustomerCriteria(Category category, CriteriaImportance criteriaImportance) {
+        this.category = category;
+        this.criteriaImportance = criteriaImportance;
+    }
 }

@@ -20,14 +20,17 @@ public class ShopCriteria {
     public List<Category> categories;
     @Enumerated
     public CriteriaWeight criteriaWeight;
-    public boolean positiveWeight;
 
-    public int getCriteriaWeightRating(int highCriteriaCount) {
-        if (criteriaWeight != CriteriaWeight.AD) {
-            int multiplier = positiveWeight ? 1 : -1;
-            return criteriaWeight.rating * multiplier;
-        } else {
-            return highCriteriaCount * criteriaWeight.rating;
-        }
+    public ShopCriteria() {
+    }
+
+    public ShopCriteria(String name, List<Category> categories, CriteriaWeight criteriaWeight) {
+        this.name = name;
+        this.categories = categories;
+        this.criteriaWeight = criteriaWeight;
+    }
+
+    public int getCriteriaWeightRating() {
+        return criteriaWeight.rating;
     }
 }

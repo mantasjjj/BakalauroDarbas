@@ -17,4 +17,12 @@ public class Customer {
 
     @OneToMany(cascade = {CascadeType.ALL})
     public List<CustomerCriteria> customerCriteria;
+
+    public Customer() {
+
+    }
+
+    public Customer(List<CustomerCriteria> customerCriteria) {
+        this.customerCriteria = customerCriteria;
+    }
 }

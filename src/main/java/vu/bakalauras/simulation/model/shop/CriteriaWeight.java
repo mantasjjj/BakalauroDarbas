@@ -7,7 +7,7 @@ public enum CriteriaWeight {
     MEDIUM(10),
     LOW(2),
     NONE(0),
-    AD(30);
+    AD(500);
 
     public final int rating;
 

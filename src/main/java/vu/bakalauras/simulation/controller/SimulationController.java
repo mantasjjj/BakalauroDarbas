@@ -32,8 +32,10 @@ public class SimulationController {
         List<Customer> customers = customerService.findAll();
         List<Shop> shops = shopService.findAll();
 
-        for (Customer customer : customers) {
-            shops = simulationService.simulatePurchaseProcess(shops, customer);
+        for (int i = 0; i < simulateDays; i++) {
+            for (Customer customer : customers) {
+                shops = simulationService.simulatePurchaseProcess(shops, customer);
+            }
         }
 
         model.put("shops", shops);
@@ -44,7 +46,7 @@ public class SimulationController {
 
     @GetMapping("/simulation")
     public String simulateDays(@ModelAttribute("simulationRequest") SimulationRequest simulationRequest) {
-        return "redirect:/simulation/" + simulationRequest.simulateDays;
+        return "redirect:/simulation/" + 0;
     }
 
 }

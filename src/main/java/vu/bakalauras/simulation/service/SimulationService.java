@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import vu.bakalauras.simulation.model.customer.CriteriaImportance;
 import vu.bakalauras.simulation.model.customer.Customer;
 import vu.bakalauras.simulation.model.customer.CustomerCriteria;
+import vu.bakalauras.simulation.model.shop.CriteriaWeight;
 import vu.bakalauras.simulation.model.shop.Shop;
 import vu.bakalauras.simulation.model.shop.ShopCriteria;
 
@@ -26,13 +27,13 @@ public class SimulationService {
     }
 
     public Shop simulateShopChoice(List<Shop> shops, Customer customer) {
-        shops.forEach(shop -> shop.score = getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.MANDATORY, shop.highCriteriaCount));
+        shops.forEach(shop -> shop.score = getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.MANDATORY));
         double shopsMaxScore = getMax(shops);
 
         List<Shop> chosenShops = shops.stream().filter(s -> s.score == shopsMaxScore).collect(Collectors.toList());
 
         if (chosenShops.size() > 1) {
-            chosenShops.forEach(shop -> shop.score += getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.OPTIONAL, shop.highCriteriaCount));
+            chosenShops.forEach(shop -> shop.score += getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.OPTIONAL));
 
             double chosenShopsMaxScore = getMax(chosenShops);
             return chosenShops.stream().filter(shop -> shop.score == chosenShopsMaxScore).findFirst().orElse(null);
@@ -42,27 +43,31 @@ public class SimulationService {
     }
 
     public double getShopScore(List<ShopCriteria> shopCriteria, List<CustomerCriteria> customerCriteria,
-                               CriteriaImportance criteriaImportance, int highCriteriaCount) {
+                               CriteriaImportance criteriaImportance) {
         List<CustomerCriteria> filteredCustomerCriteria = customerCriteria
                 .stream()
                 .filter(c -> c.criteriaImportance == criteriaImportance)
                 .collect(Collectors.toList());
 
-        double totalShopCriteriaScore = shopCriteria.stream().map(s -> s.criteriaWeight.rating).reduce(0, Integer::sum);
+        double totalShopCriteriaScore = shopCriteria.stream()
+                .filter(s -> s.criteriaWeight != CriteriaWeight.HIGHEST && s.criteriaWeight != CriteriaWeight.AD)
+                .map(s -> s.criteriaWeight.rating)
+                .reduce(0, Integer::sum);
         double shopScore = 0;
         for (CustomerCriteria custCriteria : filteredCustomerCriteria) {
             List<ShopCriteria> filteredCriteriaByCategory = shopCriteria
                     .stream()
-                    .filter(s -> s.categories.contains(custCriteria.category))
+                    .filter(s -> s.categories.contains(custCriteria.category)
+                            && s.criteriaWeight != CriteriaWeight.HIGHEST && s.criteriaWeight != CriteriaWeight.AD)
                     .collect(Collectors.toList());
 
-            shopScore += getCriteriaScore(filteredCriteriaByCategory, highCriteriaCount, totalShopCriteriaScore);
+            shopScore += getCriteriaScore(filteredCriteriaByCategory, totalShopCriteriaScore);
         }
         return shopScore;
     }
 
-    public double getCriteriaScore(List<ShopCriteria> filteredShopCriteria, int highCriteriaCount, double totalCriteriaScore) {
-        double totalScore = filteredShopCriteria.stream().map(s -> s.getCriteriaWeightRating(highCriteriaCount)).reduce(0, Integer::sum);
+    public double getCriteriaScore(List<ShopCriteria> filteredShopCriteria, double totalCriteriaScore) {
+        double totalScore = filteredShopCriteria.stream().map(ShopCriteria::getCriteriaWeightRating).reduce(0, Integer::sum);
         return totalScore / totalCriteriaScore;
     }
 

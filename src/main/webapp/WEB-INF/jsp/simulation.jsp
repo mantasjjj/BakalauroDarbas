@@ -1,4 +1,4 @@
-<%@ include file="../../webapp/WEB-INF/jsp/common/header.jspf" %>
+<%@include file="common/header.jspf"%>
 <style>
     h3, h5, table, a {
         display: flex;
@@ -45,7 +45,7 @@
             <tr class="${shop.mostSales ? "mostSales" : ""}">
                 <td>${shop.name}</td>
 <%--                <td>${shop.daysLasted}</td>--%>
-                <td>${shop.sales}</td>
+                <td>${shop.totalSales}</td>
 <%--                <td>${shop.generatedRevenue}</td>--%>
 <%--                <td>${shop.bankrupt ? "Yes" : "No"}</td>--%>
 <%--                <td>${shop.bankruptSellers}</td>--%>

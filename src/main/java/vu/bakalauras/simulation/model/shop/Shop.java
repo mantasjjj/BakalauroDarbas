@@ -19,12 +19,19 @@ public class Shop {
     public String name;
     @OneToMany(cascade = {CascadeType.ALL})
     public List<ShopCriteria> shopCriteria;
-    public int highCriteriaCount;
     @OneToOne(cascade = {CascadeType.ALL})
     public Owner owner;
     @OneToMany(cascade = {CascadeType.ALL})
     public List<Seller> sellers;
-    public int totalSales;
+    public int totalSales = 0;
     public double score;
     public boolean mostSales;
+
+    public Shop() {
+    }
+
+    public Shop(String name, List<ShopCriteria> shopCriteria) {
+        this.name = name;
+        this.shopCriteria = shopCriteria;
+    }
 }
