@@ -5,6 +5,8 @@ public enum Category {
     SELLER_QUALITY,
     PRICE,
     PRODUCT_QUALITY,
+    PRODUCT_REVIEWS,
     PHOTOS,
-    DESCRIPTION
+    INFORMATION_QUALITY,
+    SHIPPING
 }
