@@ -40,6 +40,8 @@ public class SimulationController {
             numberOfCustomers += 1000;
         }
 
+        updateShopWithMostSales(shops);
+
         model.put("shops", shops);
         model.put("numberOfDays", simulateDays);
         model.put("numberOfCustomers", numberOfCustomers);
@@ -51,4 +53,16 @@ public class SimulationController {
         return "redirect:/simulation/" + 0;
     }
 
+    private void updateShopWithMostSales(List<Shop> shops) {
+        double max = -1;
+        int index = 0;
+        for (int i = 0; i < shops.size(); i++) {
+            if (shops.get(i).totalSales > max) {
+                max = shops.get(i).totalSales;
+                index = i;
+            }
+        }
+
+        shops.get(index).mostSales = true;
+    }
 }
