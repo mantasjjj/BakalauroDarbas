@@ -82,7 +82,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         amazonCriteria.add(new ShopCriteria("Optimali produkto kaina",
                 Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.HIGH));
         amazonCriteria.add(new ShopCriteria("Geras peržiūros / pardavimo santykis",
-                Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+                Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.PHOTOS), CriteriaWeight.HIGH));
         amazonCriteria.add(new ShopCriteria("Produkto aprašymo kokybė",
                 Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
         amazonCriteria.add(new ShopCriteria("Kokybiški „Search terms",
@@ -95,7 +95,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         amazonCriteria.add(new ShopCriteria("Pavadinimo kokybė",
                 Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
         amazonCriteria.add(new ShopCriteria("Pardavimų skaičius",
-                Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
+                Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
         amazonCriteria.add(new ShopCriteria("Klientų atsiliepimų skaičius",
                 Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_REVIEWS), CriteriaWeight.MEDIUM));
         amazonCriteria.add(new ShopCriteria("Klientų įvertinimai",
@@ -107,7 +107,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         amazonCriteria.add(new ShopCriteria("Produkto skelbimo užbaigtumas",
                 Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
         amazonCriteria.add(new ShopCriteria("Produkto ypatybių išrašymas",
-                Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+                Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
         amazonCriteria.add(new ShopCriteria("Greitas apdorojimo laikas",
                 Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
         amazonCriteria.add(new ShopCriteria("Geras POP (Perfect order percentage)",
@@ -122,7 +122,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         amazonCriteria.add(new ShopCriteria("Atsakyti klausimai",
                 Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
         amazonCriteria.add(new ShopCriteria("Praleistas laikas produkto puslapyje",
-                Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS), CriteriaWeight.LOW));
+                Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
         amazonCriteria.add(new ShopCriteria("Produkto aprašymo raktažodžiai",
                 Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
         amazonCriteria.add(new ShopCriteria("Produkto specifikacijos",
@@ -152,7 +152,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         aliExpressCriteria.add(new ShopCriteria("Atsiliepimų bendras įvertis",
                 Arrays.asList(Category.PRODUCT_QUALITY, Category.PRODUCT_REVIEWS), CriteriaWeight.HIGH));
         aliExpressCriteria.add(new ShopCriteria("Specifiškai AliExpress atrinkti produktai AliExpress Choice",
-                Arrays.asList(Category.PRODUCT_QUALITY, Category.PRICE, Category.INFORMATION_QUALITY, Category.SELLER_QUALITY, Category.PHOTOS, Category.SHIPPING), CriteriaWeight.HIGH));
+                Arrays.asList(Category.PRODUCT_QUALITY, Category.PRICE, Category.INFORMATION_QUALITY, Category.SELLER_QUALITY, Category.PHOTOS, Category.SHIPPING, Category.PRODUCT_REVIEWS), CriteriaWeight.HIGH));
 
         aliExpressCriteria.add(new ShopCriteria("Vartotojo termino buvimas aprašyme",
                 Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
@@ -170,8 +170,6 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
                 Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
         aliExpressCriteria.add(new ShopCriteria("Produkto kategorijos",
                 Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
-        aliExpressCriteria.add(new ShopCriteria("Produkto naujumas",
-                Arrays.asList(), CriteriaWeight.MEDIUM));
 
         aliExpressCriteria.add(new ShopCriteria("Vartotojo termino sinonimų buvimas aprašyme",
                 Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
@@ -180,7 +178,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         aliExpressCriteria.add(new ShopCriteria("Siuntimas su grąžinimu",
                 Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING), CriteriaWeight.LOW));
         aliExpressCriteria.add(new ShopCriteria("Paspaudimų skaičius",
-                Arrays.asList(Category.PHOTOS, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+                Arrays.asList(Category.PHOTOS), CriteriaWeight.LOW));
         aliExpressCriteria.add(new ShopCriteria("Įsiminimų skaičius",
                 Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
         aliExpressCriteria.add(new ShopCriteria("Užpildytos specifikacijos",
@@ -236,7 +234,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
                 Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
 
         ebayriteria.add(new ShopCriteria("Produkto aprašymo baigtinumas",
-                Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+                Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
         ebayriteria.add(new ShopCriteria("Tinkamai panaudotos žodžių kombinacijos",
                 Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
         ebayriteria.add(new ShopCriteria("Papildomos produkto nuotraukos",
@@ -252,7 +250,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         ebayriteria.add(new ShopCriteria("Tinkamai parinktos aprašymo spalvos",
                 Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
         ebayriteria.add(new ShopCriteria("Pardavėjo parduotuvės taisyklių baigtinumas",
-                Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+                Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
         ebayriteria.add(new ShopCriteria("Pardavėjo grąžinimo taisyklių baigtinumas",
                 Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING), CriteriaWeight.LOW));
         ebayriteria.add(new ShopCriteria("Produkto kaina",
@@ -260,11 +258,11 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         ebayriteria.add(new ShopCriteria("Produkto skelbimo baigtinumas",
                 Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
         ebayriteria.add(new ShopCriteria("Produkto paspaudimai",
-                Arrays.asList(Category.PHOTOS, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+                Arrays.asList(Category.PHOTOS), CriteriaWeight.LOW));
         ebayriteria.add(new ShopCriteria("Produkto įsiminimai",
-                Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+                Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS), CriteriaWeight.LOW));
         ebayriteria.add(new ShopCriteria("Produkto pardavimai",
-                Arrays.asList(Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+                Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.LOW));
 
         return ebayriteria;
     }
@@ -297,7 +295,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         etsyCriteria.add(new ShopCriteria("Pardavėjo klientų aptarnavimo įvertis",
                 Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
         etsyCriteria.add(new ShopCriteria("Kainos korektiškumas",
-                Arrays.asList(Category.PRICE), CriteriaWeight.MEDIUM));
+                Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
 
         etsyCriteria.add(new ShopCriteria("Produkto atributai atitinkantys paieškos terminą",
                 Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
@@ -316,7 +314,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         etsyCriteria.add(new ShopCriteria("Produkto atnaujinimo naujumas",
                 Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
         etsyCriteria.add(new ShopCriteria("Produkto ir pirkėjo lokacija",
-                Arrays.asList(Category.SHIPPING), CriteriaWeight.LOW));
+                Arrays.asList(), CriteriaWeight.LOW));
         etsyCriteria.add(new ShopCriteria("Produkto pavadinimo išvertimas į parduotuvės nurodytą kalbą",
                 Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
         etsyCriteria.add(new ShopCriteria("Produkto žymų išvertimas į parduotuvės nurodytą kalbą",
@@ -325,9 +323,9 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
                 Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
         etsyCriteria.add(new ShopCriteria("Aukšta nuotraukų kokybė",
                 Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
-        etsyCriteria.add(new ShopCriteria("„Pagrindinės nuotraukos tikslumas",
+        etsyCriteria.add(new ShopCriteria("Pagrindinės nuotraukos tikslumas",
                 Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
-        etsyCriteria.add(new ShopCriteria("Pardavėjo komunikavimas su buvusiais klientais”",
+        etsyCriteria.add(new ShopCriteria("Pardavėjo komunikavimas su buvusiais klientais",
                 Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
 
         return etsyCriteria;

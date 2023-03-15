@@ -31,16 +31,18 @@ public class SimulationController {
         model.addAttribute("simulationRequest", new SimulationRequest());
         List<Customer> customers = customerService.findAll();
         List<Shop> shops = shopService.findAll();
+        int numberOfCustomers = 0;
 
         for (int i = 0; i < simulateDays; i++) {
             for (Customer customer : customers) {
                 shops = simulationService.simulatePurchaseProcess(shops, customer);
             }
+            numberOfCustomers += 1000;
         }
 
         model.put("shops", shops);
         model.put("numberOfDays", simulateDays);
-//        model.put("numberOfCustomers", numberOfCustomers);
+        model.put("numberOfCustomers", numberOfCustomers);
         return "simulation";
     }
 
