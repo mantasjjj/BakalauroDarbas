@@ -30,8 +30,9 @@ public class Shop {
     public Shop() {
     }
 
-    public Shop(String name, List<ShopCriteria> shopCriteria) {
+    public Shop(String name, List<ShopCriteria> shopCriteria, List<Seller> sellers) {
         this.name = name;
         this.shopCriteria = shopCriteria;
+        this.sellers = sellers;
     }
 }

@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import vu.bakalauras.simulation.Category;
-import vu.bakalauras.simulation.model.customer.CriteriaImportance;
 import vu.bakalauras.simulation.model.customer.Customer;
-import vu.bakalauras.simulation.model.customer.CustomerCriteria;
+import vu.bakalauras.simulation.model.seller.Seller;
 import vu.bakalauras.simulation.model.shop.CriteriaWeight;
 import vu.bakalauras.simulation.model.shop.Shop;
 import vu.bakalauras.simulation.model.shop.ShopCriteria;
 import vu.bakalauras.simulation.service.CustomerGenerator;
 import vu.bakalauras.simulation.service.CustomerService;
+import vu.bakalauras.simulation.service.SellerRankingService;
 import vu.bakalauras.simulation.service.ShopService;
 
 import java.util.ArrayList;
@@ -29,6 +29,9 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
 
     @Autowired
     private CustomerGenerator customerGenerator;
+
+    @Autowired
+    private SellerRankingService sellerRankingService;
 
     @Override
     public void run(String... args) {
@@ -53,17 +56,24 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
     public List<Shop> fillShops() {
         List<Shop> shops = new ArrayList<>();
 
+        //Sellers
+        List<Seller> sellers = fillInitialSellers();
+
         //Amazon
-        shops.add(new Shop("Amazon", fillAmazonShopCriteria()));
+        List<ShopCriteria> amazonCriteria = fillAmazonShopCriteria();
+        shops.add(new Shop("Amazon", amazonCriteria, fillRankedSellers(amazonCriteria, sellers)));
 
         //EBay
-        shops.add(new Shop("EBay", fillEBayShopCriteria()));
+        List<ShopCriteria> ebayCriteria = fillEBayShopCriteria();
+        shops.add(new Shop("EBay", ebayCriteria, fillRankedSellers(ebayCriteria, sellers)));
 
         //AliExpress
-        shops.add(new Shop("AliExpress", fillAliExpressShopCriteria()));
+        List<ShopCriteria> aliExpressCriteria = fillAliExpressShopCriteria();
+        shops.add(new Shop("AliExpress", aliExpressCriteria, fillRankedSellers(aliExpressCriteria, sellers)));
 
         //Etsy
-        shops.add(new Shop("Etsy", fillEtsyShopCriteria()));
+        List<ShopCriteria> etsyCriteria = fillEtsyShopCriteria();
+        shops.add(new Shop("Etsy", etsyCriteria, fillRankedSellers(etsyCriteria, sellers)));
 
         return shops;
     }
@@ -329,5 +339,13 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
                 Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
 
         return etsyCriteria;
+    }
+
+    private List<Seller> fillRankedSellers(List<ShopCriteria> shopCriteria, List<Seller> sellers) {
+        return sellerRankingService.getRankedSellers(shopCriteria, sellers);
+    }
+
+    private List<Seller> fillInitialSellers() {
+        return null;
     }
 }

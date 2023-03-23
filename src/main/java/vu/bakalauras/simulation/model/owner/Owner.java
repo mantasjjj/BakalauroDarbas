@@ -15,4 +15,5 @@ public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    public boolean satisfied;
 }

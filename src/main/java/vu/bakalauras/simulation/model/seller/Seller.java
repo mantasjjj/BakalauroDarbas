@@ -2,11 +2,10 @@ package vu.bakalauras.simulation.model.seller;
 
 import lombok.Getter;
 import lombok.Setter;
+import vu.bakalauras.simulation.Category;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,4 +14,17 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @ElementCollection
+    public List<Category> criteria;
+    public double sellerScore;
+    public int totalSales = 0;
+    public boolean bankrupt;
+
+    public Seller() {
+
+    }
+
+    public Seller(List<Category> criteria) {
+        this.criteria = criteria;
+    }
 }
