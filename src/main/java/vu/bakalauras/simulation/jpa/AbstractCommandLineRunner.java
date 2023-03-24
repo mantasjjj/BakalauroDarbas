@@ -48,32 +48,31 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
     }
 
     public List<Customer> fillCustomers() {
-        List<Customer> customers = customerGenerator.generateCustomerList();
-
-        return customers;
+        return customerGenerator.generateCustomerList();
     }
 
     public List<Shop> fillShops() {
         List<Shop> shops = new ArrayList<>();
 
-        //Sellers
-        List<Seller> sellers = fillInitialSellers();
-
         //Amazon
         List<ShopCriteria> amazonCriteria = fillAmazonShopCriteria();
-        shops.add(new Shop("Amazon", amazonCriteria, fillRankedSellers(amazonCriteria, sellers)));
+        List<Seller> amazonSellers = fillInitialSellers();
+        shops.add(new Shop("Amazon", amazonCriteria, fillRankedSellers(amazonCriteria, amazonSellers)));
 
         //EBay
         List<ShopCriteria> ebayCriteria = fillEBayShopCriteria();
-        shops.add(new Shop("EBay", ebayCriteria, fillRankedSellers(ebayCriteria, sellers)));
+        List<Seller> ebaySellers = fillInitialSellers();
+        shops.add(new Shop("EBay", ebayCriteria, fillRankedSellers(ebayCriteria, ebaySellers)));
 
         //AliExpress
         List<ShopCriteria> aliExpressCriteria = fillAliExpressShopCriteria();
-        shops.add(new Shop("AliExpress", aliExpressCriteria, fillRankedSellers(aliExpressCriteria, sellers)));
+        List<Seller> aliExpressSellers = fillInitialSellers();
+        shops.add(new Shop("AliExpress", aliExpressCriteria, fillRankedSellers(aliExpressCriteria, aliExpressSellers)));
 
         //Etsy
         List<ShopCriteria> etsyCriteria = fillEtsyShopCriteria();
-        shops.add(new Shop("Etsy", etsyCriteria, fillRankedSellers(etsyCriteria, sellers)));
+        List<Seller> etsySellers = fillInitialSellers();
+        shops.add(new Shop("Etsy", etsyCriteria, fillRankedSellers(etsyCriteria, etsySellers)));
 
         return shops;
     }
@@ -346,6 +345,19 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
     }
 
     private List<Seller> fillInitialSellers() {
-        return null;
+        List<Seller> sellers = new ArrayList<>();
+
+        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.SELLER_QUALITY, Category.SHIPPING)));
+        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY, Category.PRODUCT_REVIEWS)));
+        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY)));
+        sellers.add(new Seller(Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY)));
+        sellers.add(new Seller(Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.PHOTOS)));
+        sellers.add(new Seller(Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.PRODUCT_REVIEWS)));
+        sellers.add(new Seller(Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING, Category.PHOTOS)));
+        sellers.add(new Seller(Arrays.asList(Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY, Category.SHIPPING)));
+        sellers.add(new Seller(Arrays.asList(Category.PHOTOS, Category.PRODUCT_QUALITY, Category.PRICE)));
+        sellers.add(new Seller(Arrays.asList(Category.INFORMATION_QUALITY, Category.PRICE, Category.SHIPPING)));
+
+        return sellers;
     }
 }

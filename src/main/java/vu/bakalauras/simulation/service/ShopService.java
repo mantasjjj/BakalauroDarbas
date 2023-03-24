@@ -2,7 +2,6 @@ package vu.bakalauras.simulation.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vu.bakalauras.simulation.model.customer.Customer;
 import vu.bakalauras.simulation.model.shop.Shop;
 import vu.bakalauras.simulation.repository.ShopRepository;
 

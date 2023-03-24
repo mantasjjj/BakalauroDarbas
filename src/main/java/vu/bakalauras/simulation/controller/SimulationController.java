@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import vu.bakalauras.simulation.model.SimulationRequest;
 import vu.bakalauras.simulation.model.customer.Customer;
+import vu.bakalauras.simulation.model.seller.Seller;
 import vu.bakalauras.simulation.model.shop.Shop;
 import vu.bakalauras.simulation.service.CustomerService;
 import vu.bakalauras.simulation.service.ShopService;
@@ -38,9 +39,11 @@ public class SimulationController {
                 shops = simulationService.simulatePurchaseProcess(shops, customer);
             }
             numberOfCustomers += 1000;
+            shops = simulationService.updateBankruptSellers(shops);
         }
 
-        updateShopWithMostSales(shops);
+
+        updateShops(shops);
 
         model.put("shops", shops);
         model.put("numberOfDays", simulateDays);
@@ -53,14 +56,19 @@ public class SimulationController {
         return "redirect:/simulation/" + 0;
     }
 
-    private void updateShopWithMostSales(List<Shop> shops) {
+    private void updateShops(List<Shop> shops) {
         double max = -1;
         int index = 0;
         for (int i = 0; i < shops.size(); i++) {
+            double bankruptSellersCount = 0;
             if (shops.get(i).totalSales > max) {
                 max = shops.get(i).totalSales;
                 index = i;
             }
+            for (Seller seller : shops.get(i).sellers) {
+                bankruptSellersCount += seller.bankrupt ? 1 : 0;
+            }
+            shops.get(i).bankruptSellers = (bankruptSellersCount * 100) / shops.get(i).sellers.size();
         }
 
         shops.get(index).mostSales = true;

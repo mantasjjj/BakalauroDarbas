@@ -17,7 +17,11 @@ public class Seller {
     @ElementCollection
     public List<Category> criteria;
     public double sellerScore;
+    public int criteriaMatch;
     public int totalSales = 0;
+    public int dailySales = 0;
+    public int daysWithoutSale = 0;
+    public int maxDaysWithoutSale = 10;
     public boolean bankrupt;
 
     public Seller() {

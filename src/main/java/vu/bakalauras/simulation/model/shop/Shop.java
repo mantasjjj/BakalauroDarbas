@@ -26,8 +26,14 @@ public class Shop {
     public int totalSales = 0;
     public double score;
     public boolean mostSales;
+    public double bankruptSellers;
 
     public Shop() {
+    }
+
+    public Shop(String name, List<ShopCriteria> shopCriteria) {
+        this.name = name;
+        this.shopCriteria = shopCriteria;
     }
 
     public Shop(String name, List<ShopCriteria> shopCriteria, List<Seller> sellers) {

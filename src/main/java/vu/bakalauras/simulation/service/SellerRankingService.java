@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import vu.bakalauras.simulation.Category;
 import vu.bakalauras.simulation.model.seller.Seller;
 import vu.bakalauras.simulation.model.shop.CriteriaWeight;
-import vu.bakalauras.simulation.model.shop.Shop;
 import vu.bakalauras.simulation.model.shop.ShopCriteria;
 
 import java.util.Comparator;
@@ -18,7 +17,7 @@ import static vu.bakalauras.simulation.service.SimulationService.getTotalShopSco
 public class SellerRankingService {
 
     public List<Seller> getRankedSellers(List<ShopCriteria> shopCriteria, List<Seller> sellers) {
-
+        sellers.forEach(seller -> seller.sellerScore = 0);
         double totalShopCriteriaScore = getTotalShopScore(shopCriteria);
 
         for (Seller seller : sellers) {
@@ -38,8 +37,8 @@ public class SellerRankingService {
 
         sellers = sellers
                 .stream()
-                .sorted(Comparator.comparingDouble(Seller::getSellerScore))
-                .collect(Collectors.toList()); //todo: check
+                .sorted(Comparator.comparingDouble(Seller::getSellerScore).reversed())
+                .collect(Collectors.toList());
 
         return sellers;
     }
