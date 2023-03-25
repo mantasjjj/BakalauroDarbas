@@ -18,10 +18,6 @@ public class SimulationRequest {
 
     public Integer simulateDays;
 
-    public SimulationRequest(Integer simulateDays) {
-        this.simulateDays = simulateDays;
-    }
-
     public SimulationRequest() {
     }
 }

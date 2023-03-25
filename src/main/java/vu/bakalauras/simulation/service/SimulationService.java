@@ -94,7 +94,7 @@ public class SimulationService {
     public List<Seller> simulateSellerChoice(List<Seller> sellers, List<CustomerCriteria> customerCriteria) {
         sellers.forEach(s -> s.criteriaMatch = 0);
         List<Seller> highestRankedSellers = sellers.stream().filter(s -> !s.bankrupt).limit(7).collect(Collectors.toList()); //7, nes Amazon rodo tik 7
-        Seller chosenSeller = null;
+        Seller chosenSeller;
 
         //todo: improve with mandatory and optional
         for (Seller seller : highestRankedSellers) {
