@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import vu.bakalauras.simulation.Category;
 import vu.bakalauras.simulation.model.customer.Customer;
+import vu.bakalauras.simulation.model.owner.Owner;
 import vu.bakalauras.simulation.model.seller.Seller;
 import vu.bakalauras.simulation.model.shop.CriteriaWeight;
 import vu.bakalauras.simulation.model.shop.Shop;
@@ -14,6 +15,7 @@ import vu.bakalauras.simulation.service.CustomerService;
 import vu.bakalauras.simulation.service.SellerRankingService;
 import vu.bakalauras.simulation.service.ShopService;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,22 +59,26 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         //Amazon
         List<ShopCriteria> amazonCriteria = fillAmazonShopCriteria();
         List<Seller> amazonSellers = fillInitialSellers();
-        shops.add(new Shop("Amazon", amazonCriteria, fillRankedSellers(amazonCriteria, amazonSellers)));
+        Owner amazonOwner = new Owner(365, 30);
+        shops.add(new Shop("Amazon", amazonCriteria, fillRankedSellers(amazonCriteria, amazonSellers), BigDecimal.valueOf(90), amazonOwner));
 
         //EBay
         List<ShopCriteria> ebayCriteria = fillEBayShopCriteria();
         List<Seller> ebaySellers = fillInitialSellers();
-        shops.add(new Shop("EBay", ebayCriteria, fillRankedSellers(ebayCriteria, ebaySellers)));
+        Owner ebayOwner = new Owner(7, 30);
+        shops.add(new Shop("EBay", ebayCriteria, fillRankedSellers(ebayCriteria, ebaySellers), BigDecimal.valueOf(140.8), ebayOwner));
 
         //AliExpress
         List<ShopCriteria> aliExpressCriteria = fillAliExpressShopCriteria();
         List<Seller> aliExpressSellers = fillInitialSellers();
-        shops.add(new Shop("AliExpress", aliExpressCriteria, fillRankedSellers(aliExpressCriteria, aliExpressSellers)));
+        Owner aliExpressOwner = new Owner(95, 30);
+        shops.add(new Shop("AliExpress", aliExpressCriteria, fillRankedSellers(aliExpressCriteria, aliExpressSellers), BigDecimal.valueOf(100), aliExpressOwner));
 
         //Etsy
         List<ShopCriteria> etsyCriteria = fillEtsyShopCriteria();
         List<Seller> etsySellers = fillInitialSellers();
-        shops.add(new Shop("Etsy", etsyCriteria, fillRankedSellers(etsyCriteria, etsySellers)));
+        Owner etsyOwner = new Owner(1, 30);
+        shops.add(new Shop("Etsy", etsyCriteria, fillRankedSellers(etsyCriteria, etsySellers), BigDecimal.valueOf(50), etsyOwner));
 
         return shops;
     }
@@ -357,6 +363,10 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         sellers.add(new Seller(Arrays.asList(Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY, Category.SHIPPING)));
         sellers.add(new Seller(Arrays.asList(Category.PHOTOS, Category.PRODUCT_QUALITY, Category.PRICE)));
         sellers.add(new Seller(Arrays.asList(Category.INFORMATION_QUALITY, Category.PRICE, Category.SHIPPING)));
+        sellers.add(new Seller(Arrays.asList(Category.PRODUCT_QUALITY, Category.PRODUCT_QUALITY, Category.SELLER_QUALITY)));
+        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.PRICE, Category.SELLER_QUALITY)));
+        sellers.add(new Seller(Arrays.asList(Category.INFORMATION_QUALITY, Category.SELLER_QUALITY, Category.INFORMATION_QUALITY)));
+        sellers.add(new Seller(Arrays.asList(Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY, Category.PRODUCT_QUALITY)));
 
         return sellers;
     }

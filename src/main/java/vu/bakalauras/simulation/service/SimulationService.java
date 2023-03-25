@@ -25,6 +25,7 @@ public class SimulationService {
             if (shop.name.equals(chosenShop.name)) {
                 int successfulPurchase = simulatePurchase(chosenShop.score);
                 shop.totalSales += successfulPurchase;
+                shop.dailySales += successfulPurchase;
                 shop.sellers = simulateSellerChoice(shop.sellers, customer.customerCriteria);
             }
         }
@@ -32,13 +33,13 @@ public class SimulationService {
     }
 
     public Shop simulateShopChoice(List<Shop> shops, Customer customer) {
-        shops.forEach(shop -> shop.score = getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.MANDATORY));
+        shops.forEach(shop -> shop.score = getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.MANDATORY, shop.bankrupt));
         double shopsMaxScore = getMaxShopScore(shops);
 
         List<Shop> chosenShops = shops.stream().filter(s -> s.score == shopsMaxScore).collect(Collectors.toList());
 
         if (chosenShops.size() > 1) {
-            chosenShops.forEach(shop -> shop.score += getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.OPTIONAL));
+            chosenShops.forEach(shop -> shop.score += getShopScore(shop.shopCriteria, customer.customerCriteria, CriteriaImportance.OPTIONAL, shop.bankrupt));
 
             double chosenShopsMaxScore = getMaxShopScore(chosenShops);
             return chosenShops.stream().filter(shop -> shop.score == chosenShopsMaxScore).findFirst().orElse(null);
@@ -48,24 +49,27 @@ public class SimulationService {
     }
 
     public double getShopScore(List<ShopCriteria> shopCriteria, List<CustomerCriteria> customerCriteria,
-                               CriteriaImportance criteriaImportance) {
-        List<CustomerCriteria> filteredCustomerCriteria = customerCriteria
-                .stream()
-                .filter(c -> c.criteriaImportance == criteriaImportance)
-                .collect(Collectors.toList());
-
-        double totalShopCriteriaScore = getTotalShopScore(shopCriteria);
-        double shopScore = 0;
-        for (CustomerCriteria custCriteria : filteredCustomerCriteria) {
-            List<ShopCriteria> filteredCriteriaByCategory = shopCriteria
+                               CriteriaImportance criteriaImportance, boolean shopBankrupt) {
+        if (!shopBankrupt) {
+            List<CustomerCriteria> filteredCustomerCriteria = customerCriteria
                     .stream()
-                    .filter(s -> s.categories.contains(custCriteria.category)
-                            && s.criteriaWeight != CriteriaWeight.HIGHEST && s.criteriaWeight != CriteriaWeight.AD)
+                    .filter(c -> c.criteriaImportance == criteriaImportance)
                     .collect(Collectors.toList());
 
-            shopScore += getCriteriaScore(filteredCriteriaByCategory, totalShopCriteriaScore);
+            double totalShopCriteriaScore = getTotalShopScore(shopCriteria);
+            double shopScore = 0;
+            for (CustomerCriteria custCriteria : filteredCustomerCriteria) {
+                List<ShopCriteria> filteredCriteriaByCategory = shopCriteria
+                        .stream()
+                        .filter(s -> s.categories.contains(custCriteria.category)
+                                && s.criteriaWeight != CriteriaWeight.HIGHEST && s.criteriaWeight != CriteriaWeight.AD)
+                        .collect(Collectors.toList());
+
+                shopScore += getCriteriaScore(filteredCriteriaByCategory, totalShopCriteriaScore);
+            }
+            return shopScore;
         }
-        return shopScore;
+        return 0;
     }
 
     public static double getTotalShopScore(List<ShopCriteria> shopCriteria) {
@@ -89,7 +93,7 @@ public class SimulationService {
 
     public List<Seller> simulateSellerChoice(List<Seller> sellers, List<CustomerCriteria> customerCriteria) {
         sellers.forEach(s -> s.criteriaMatch = 0);
-        List<Seller> highestRankedSellers = sellers.stream().filter(s -> !s.bankrupt).limit(5).collect(Collectors.toList());
+        List<Seller> highestRankedSellers = sellers.stream().filter(s -> !s.bankrupt).limit(7).collect(Collectors.toList()); //7, nes Amazon rodo tik 7
         Seller chosenSeller = null;
 
         //todo: improve with mandatory and optional
@@ -119,8 +123,17 @@ public class SimulationService {
                     seller.bankrupt = true;
                 }
             }
+            if (shop.dailySales < shop.minimumDailySales) {
+                shop.daysWithLessThanAllowedSales++;
+            }
+            if (shop.daysWithLessThanAllowedSales >= shop.maxDaysWithLessThanAllowedSales) {
+                shop.bankrupt = true;
+            }
         }
-        shops.forEach(shop -> shop.sellers.forEach(seller -> seller.dailySales = 0));
+        shops.forEach(shop -> {
+            shop.sellers.forEach(seller -> seller.dailySales = 0);
+            shop.dailySales = 0;
+        });
         return shops;
     }
 

@@ -15,5 +15,14 @@ public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    public boolean satisfied;
+    public int maxDaysWithLessThanAllowedSales;
+    public int minimumDailySales;
+
+    public Owner() {
+    }
+
+    public Owner(int maxDaysWithLessThanAllowedSales, int minimumDailySales) {
+        this.maxDaysWithLessThanAllowedSales = maxDaysWithLessThanAllowedSales;
+        this.minimumDailySales = minimumDailySales;
+    }
 }

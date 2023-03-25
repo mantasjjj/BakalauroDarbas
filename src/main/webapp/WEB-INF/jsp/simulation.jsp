@@ -34,9 +34,8 @@
     <table>
         <tr>
             <td>Eshop</td>
-<%--            <td>Days survived</td>--%>
             <td>Sales made</td>
-<%--            <td>Revenue generated</td>--%>
+            <td>Revenue generated</td>
             <td>Bankrupt sellers</td>
             <td>Bankrupt</td>
             <td>Owner satisfied</td>
@@ -45,12 +44,10 @@
         <c:forEach begin="0" end="4" items="${shops}" var="shop">
             <tr class="${shop.mostSales ? "mostSales" : ""}">
                 <td>${shop.name}</td>
-<%--                <td>${shop.daysLasted}</td>--%>
                 <td>${shop.totalSales}</td>
-<%--                <td>${shop.generatedRevenue}</td>--%>
-<%--                <td>${shop.bankrupt ? "Yes" : "No"}</td>--%>
+                <td>${shop.generatedRevenue}</td>
                 <td>${shop.bankruptSellers}%</td>
-                <td>No</td>
+                <td>${shop.bankrupt ? "Yes" : "No"}</td>
                 <td>${shop.bankruptSellers > 50 ? "No" : "Yes"}</td>
             </tr>
         </c:forEach>

@@ -14,7 +14,11 @@ import vu.bakalauras.simulation.service.CustomerService;
 import vu.bakalauras.simulation.service.ShopService;
 import vu.bakalauras.simulation.service.SimulationService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+
+import static java.lang.Math.round;
 
 @Controller
 public class SimulationController {
@@ -42,7 +46,6 @@ public class SimulationController {
             shops = simulationService.updateBankruptSellers(shops);
         }
 
-
         updateShops(shops);
 
         model.put("shops", shops);
@@ -68,7 +71,10 @@ public class SimulationController {
             for (Seller seller : shops.get(i).sellers) {
                 bankruptSellersCount += seller.bankrupt ? 1 : 0;
             }
-            shops.get(i).bankruptSellers = (bankruptSellersCount * 100) / shops.get(i).sellers.size();
+            BigDecimal bankruptSellerPercentage = (BigDecimal.valueOf(bankruptSellersCount).multiply(BigDecimal.valueOf(100)))
+                    .divide(BigDecimal.valueOf(shops.get(i).sellers.size()), RoundingMode.HALF_UP);
+            shops.get(i).bankruptSellers = bankruptSellerPercentage.setScale(2, RoundingMode.HALF_UP);
+            shops.get(i).generatedRevenue = shops.get(i).averageProductPrice.multiply(BigDecimal.valueOf(shops.get(i).totalSales));
         }
 
         shops.get(index).mostSales = true;
