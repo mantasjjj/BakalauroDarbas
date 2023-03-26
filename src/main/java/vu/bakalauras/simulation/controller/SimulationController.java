@@ -16,7 +16,9 @@ import vu.bakalauras.simulation.service.SimulationService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class SimulationController {
@@ -45,6 +47,7 @@ public class SimulationController {
         }
 
         updateShops(shops);
+        shops = shops.stream().sorted(Comparator.comparingInt(Shop::getTotalSales).reversed()).collect(Collectors.toList());
 
         model.put("shops", shops);
         model.put("numberOfDays", simulateDays);

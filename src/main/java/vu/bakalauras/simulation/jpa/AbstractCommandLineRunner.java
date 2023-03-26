@@ -60,25 +60,25 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         List<ShopCriteria> amazonCriteria = fillAmazonShopCriteria();
         List<Seller> amazonSellers = fillInitialSellers();
         Owner amazonOwner = new Owner(365, 30);
-        shops.add(new Shop("Amazon", amazonCriteria, fillRankedSellers(amazonCriteria, amazonSellers), BigDecimal.valueOf(90), amazonOwner));
+        shops.add(new Shop("Search engine 3", amazonCriteria, fillRankedSellers(amazonCriteria, amazonSellers), BigDecimal.valueOf(141.74), amazonOwner));
 
         //EBay
         List<ShopCriteria> ebayCriteria = fillEBayShopCriteria();
         List<Seller> ebaySellers = fillInitialSellers();
         Owner ebayOwner = new Owner(7, 30);
-        shops.add(new Shop("EBay", ebayCriteria, fillRankedSellers(ebayCriteria, ebaySellers), BigDecimal.valueOf(140.8), ebayOwner));
+        shops.add(new Shop("Search engine 2", ebayCriteria, fillRankedSellers(ebayCriteria, ebaySellers), BigDecimal.valueOf(140.8), ebayOwner));
 
         //AliExpress
         List<ShopCriteria> aliExpressCriteria = fillAliExpressShopCriteria();
         List<Seller> aliExpressSellers = fillInitialSellers();
         Owner aliExpressOwner = new Owner(95, 30);
-        shops.add(new Shop("AliExpress", aliExpressCriteria, fillRankedSellers(aliExpressCriteria, aliExpressSellers), BigDecimal.valueOf(100), aliExpressOwner));
+        shops.add(new Shop("Search engine 4", aliExpressCriteria, fillRankedSellers(aliExpressCriteria, aliExpressSellers), BigDecimal.valueOf(100), aliExpressOwner));
 
         //Etsy
         List<ShopCriteria> etsyCriteria = fillEtsyShopCriteria();
         List<Seller> etsySellers = fillInitialSellers();
         Owner etsyOwner = new Owner(1, 30);
-        shops.add(new Shop("Etsy", etsyCriteria, fillRankedSellers(etsyCriteria, etsySellers), BigDecimal.valueOf(50), etsyOwner));
+        shops.add(new Shop("Search engine 1", etsyCriteria, fillRankedSellers(etsyCriteria, etsySellers), BigDecimal.valueOf(50), etsyOwner));
 
         return shops;
     }

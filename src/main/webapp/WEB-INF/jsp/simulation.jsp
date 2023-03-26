@@ -33,7 +33,7 @@
 
     <table>
         <tr>
-            <td>Eshop</td>
+            <td>Search engine</td>
             <td>Sales made</td>
             <td>Revenue generated</td>
             <td>Bankrupt sellers</td>
