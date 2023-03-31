@@ -16,8 +16,8 @@ public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    public String name;
+    public String shopName;
+    public String searchEngineName;
     @OneToMany(cascade = {CascadeType.ALL})
     public List<ShopCriteria> shopCriteria;
     @OneToOne(cascade = {CascadeType.ALL})
@@ -39,8 +39,9 @@ public class Shop {
     public Shop() {
     }
 
-    public Shop(String name, List<ShopCriteria> shopCriteria, List<Seller> sellers, BigDecimal averageProductPrice, Owner owner) {
-        this.name = name;
+    public Shop(String shopName, String searchEngineName, List<ShopCriteria> shopCriteria, List<Seller> sellers, BigDecimal averageProductPrice, Owner owner) {
+        this.shopName = shopName;
+        this.searchEngineName = searchEngineName;
         this.shopCriteria = shopCriteria;
         this.sellers = sellers;
         this.averageProductPrice = averageProductPrice;

@@ -15,7 +15,7 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ElementCollection
-    public List<Category> criteria;
+    public List<Category> focusZones;
     public double sellerScore;
     public int criteriaMatch;
     public int totalSales = 0;
@@ -28,7 +28,7 @@ public class Seller {
 
     }
 
-    public Seller(List<Category> criteria) {
-        this.criteria = criteria;
+    public Seller(List<Category> focusZones) {
+        this.focusZones = focusZones;
     }
 }

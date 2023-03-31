@@ -15,9 +15,17 @@ public class CustomerGenerator {
     private static final Random RANDOM = new Random();
 
     public List<Customer> generateCustomerList() {
+        return generateCustomerList(0);
+    }
+
+    public List<Customer> generateCustomerList(int size) {
+        if (size == 0) {
+            size = 1000;
+        }
+
         List<Customer> customers = new ArrayList<>();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < size; i++) {
             List<CustomerCriteria> customerCriteria = new ArrayList<>();
             customerCriteria.add(new CustomerCriteria(Category.SEARCH_RESULT_ACCURACY, CriteriaImportance.MANDATORY));
 

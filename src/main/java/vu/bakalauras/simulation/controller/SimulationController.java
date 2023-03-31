@@ -39,10 +39,12 @@ public class SimulationController {
         int numberOfCustomers = 0;
 
         for (int i = 0; i < simulateDays; i++) {
-            for (Customer customer : customers) {
-                shops = simulationService.simulatePurchaseProcess(shops, customer);
+            for (int j = 0; j < 10; j++) {
+                for (Customer customer : customers) {
+                    shops = simulationService.simulatePurchaseProcess(shops, customer);
+                }
             }
-            numberOfCustomers += 1000;
+            numberOfCustomers += 10000;
             shops = simulationService.updateBankruptSellers(shops);
         }
 

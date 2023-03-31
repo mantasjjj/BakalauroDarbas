@@ -12,6 +12,7 @@ import vu.bakalauras.simulation.model.shop.ShopCriteria;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,11 +23,11 @@ public class SimulationService {
         Shop chosenShop = simulateShopChoice(shops, customer);
 
         for (Shop shop : shops) {
-            if (shop.name.equals(chosenShop.name)) {
+            if (shop.searchEngineName.equals(chosenShop.searchEngineName)) {
                 int successfulPurchase = simulatePurchase(chosenShop.score);
+                shop.sellers = simulateSellerChoice(shop.sellers, customer.customerCriteria);
                 shop.totalSales += successfulPurchase;
                 shop.dailySales += successfulPurchase;
-                shop.sellers = simulateSellerChoice(shop.sellers, customer.customerCriteria);
             }
         }
         return shops;
@@ -94,18 +95,19 @@ public class SimulationService {
     public List<Seller> simulateSellerChoice(List<Seller> sellers, List<CustomerCriteria> customerCriteria) {
         sellers.forEach(s -> s.criteriaMatch = 0);
         List<Seller> highestRankedSellers = sellers.stream().filter(s -> !s.bankrupt).limit(7).collect(Collectors.toList()); //7, nes Amazon rodo tik 7
-        Seller chosenSeller;
+        Optional<Seller> chosenSeller;
 
         //todo: improve with mandatory and optional
         for (Seller seller : highestRankedSellers) {
-            for (Category sellerCategory : seller.criteria) {
+            for (Category sellerCategory : seller.focusZones) {
                 seller.criteriaMatch += (int) customerCriteria.stream().filter(c -> c.category == sellerCategory).count();
             }
         }
 
-        chosenSeller = highestRankedSellers.stream().max(Comparator.comparingInt(Seller::getCriteriaMatch)).get();
+        chosenSeller = highestRankedSellers.stream().max(Comparator.comparingInt(Seller::getCriteriaMatch));
+        Seller finalChosenSeller = chosenSeller.orElseGet(() -> sellers.get(0));
         for (Seller seller : sellers) {
-            if (chosenSeller.getId() == seller.getId()) {
+            if (finalChosenSeller.getId() == seller.getId()) {
                 seller.totalSales++;
                 seller.dailySales++;
             }

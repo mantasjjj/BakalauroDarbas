@@ -33,6 +33,7 @@
 
     <table>
         <tr>
+            <td>E-shop</td>
             <td>Search engine</td>
             <td>Sales made</td>
             <td>Revenue generated</td>
@@ -43,7 +44,8 @@
 
         <c:forEach begin="0" end="4" items="${shops}" var="shop">
             <tr class="${shop.mostSales ? "mostSales" : ""}">
-                <td>${shop.name}</td>
+                <td>${shop.shopName}</td>
+                <td>${shop.searchEngineName}</td>
                 <td>${shop.totalSales}</td>
                 <td>${shop.generatedRevenue}</td>
                 <td>${shop.bankruptSellers}%</td>

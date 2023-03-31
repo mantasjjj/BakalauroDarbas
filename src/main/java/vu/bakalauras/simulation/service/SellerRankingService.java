@@ -22,7 +22,7 @@ public class SellerRankingService {
 
         for (Seller seller : sellers) {
             double sellerScore = 0;
-            for (Category category : seller.criteria) {
+            for (Category category : seller.focusZones) {
                 List<ShopCriteria> filteredCriteriaByCategory = shopCriteria
                         .stream()
                         .filter(s -> s.categories.contains(category)
