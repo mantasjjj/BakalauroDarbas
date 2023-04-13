@@ -39,11 +39,15 @@ public class SimulationController {
         int numberOfCustomers = 0;
 
         for (int i = 0; i < simulateDays; i++) {
+            increaseSellerRating(shops, i, true);
+            increaseSellerRating(shops, i, false);
             for (int j = 0; j < 10; j++) {
                 for (Customer customer : customers) {
                     shops = simulationService.simulatePurchaseProcess(shops, customer);
                 }
             }
+            decreaseSellerRating(shops, i, true);
+            decreaseSellerRating(shops, i, false);
             numberOfCustomers += 10000;
             shops = simulationService.updateBankruptSellers(shops);
         }
@@ -81,5 +85,37 @@ public class SimulationController {
         }
 
         shops.get(index).mostSales = true;
+    }
+
+    private void increaseSellerRating(List<Shop> shops, int day, boolean promoter) {
+        for (Shop shop: shops) {
+            for (Seller seller: shop.sellers) {
+                if (promoter) {
+                    if (seller.isFrequentPromoter && day % 5 == 0) {
+                        seller.sellerScore += 0.4;
+                    }
+                } else {
+                    if (seller.hasSeasonalProducts && day % 5 == 0) {
+                        seller.sellerScore += 0.4;
+                    }
+                }
+            }
+        }
+    }
+
+    private void decreaseSellerRating(List<Shop> shops, int day, boolean promoter) {
+        for (Shop shop: shops) {
+            for (Seller seller: shop.sellers) {
+                if (promoter) {
+                    if (seller.isFrequentPromoter && day % 10 == 0) {
+                        seller.sellerScore -= 0.4;
+                    }
+                } else {
+                    if (seller.hasSeasonalProducts && day % 5 == 0) {
+                        seller.sellerScore -= 0.4;
+                    }
+                }
+            }
+        }
     }
 }

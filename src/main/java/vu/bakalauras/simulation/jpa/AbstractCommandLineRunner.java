@@ -18,6 +18,7 @@ import vu.bakalauras.simulation.service.ShopService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static vu.bakalauras.simulation.Category.SELLER_QUALITY;
@@ -361,20 +362,20 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
     private List<Seller> fillInitialSellers() {
         List<Seller> sellers = new ArrayList<>();
 
-        sellers.add(new Seller(Arrays.asList(Category.PRICE, SELLER_QUALITY, Category.SHIPPING)));
-        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY, Category.PRODUCT_REVIEWS)));
-        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY)));
-        sellers.add(new Seller(Arrays.asList(SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY)));
-        sellers.add(new Seller(Arrays.asList(SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.PHOTOS)));
-        sellers.add(new Seller(Arrays.asList(SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.PRODUCT_REVIEWS)));
-        sellers.add(new Seller(Arrays.asList(SELLER_QUALITY, Category.SHIPPING, Category.PHOTOS)));
-        sellers.add(new Seller(Arrays.asList(Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY, Category.SHIPPING)));
-        sellers.add(new Seller(Arrays.asList(Category.PHOTOS, Category.PRODUCT_QUALITY, Category.PRICE)));
-        sellers.add(new Seller(Arrays.asList(Category.INFORMATION_QUALITY, Category.PRICE, Category.SHIPPING)));
-        sellers.add(new Seller(Arrays.asList(Category.PRODUCT_QUALITY, Category.PRODUCT_QUALITY, SELLER_QUALITY)));
-        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.PRICE, SELLER_QUALITY)));
-        sellers.add(new Seller(Arrays.asList(Category.INFORMATION_QUALITY, SELLER_QUALITY, Category.INFORMATION_QUALITY)));
-        sellers.add(new Seller(Arrays.asList(Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY, Category.PRODUCT_QUALITY)));
+        sellers.add(new Seller(Arrays.asList(Category.PRICE, SELLER_QUALITY, Category.SHIPPING), false, false, 2));
+        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY, Category.PRODUCT_REVIEWS), false, false, 2));
+        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), false, false, 3));
+        sellers.add(new Seller(Arrays.asList(SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), false, true, 2));
+        sellers.add(new Seller(Arrays.asList(SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.PHOTOS), false, false, 3));
+        sellers.add(new Seller(Arrays.asList(SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.PRODUCT_REVIEWS), false, true, 4));
+        sellers.add(new Seller(Arrays.asList(SELLER_QUALITY, Category.SHIPPING, Category.PHOTOS), true, false, 3));
+        sellers.add(new Seller(Arrays.asList(Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY, Category.SHIPPING), false, true, 5));
+        sellers.add(new Seller(Arrays.asList(Category.PHOTOS, Category.PRODUCT_QUALITY, Category.PRICE), false, false, 4));
+        sellers.add(new Seller(Arrays.asList(Category.INFORMATION_QUALITY, Category.PRICE, Category.SHIPPING), true, false, 2));
+        sellers.add(new Seller(Arrays.asList(Category.PRODUCT_QUALITY, Category.PRODUCT_QUALITY, SELLER_QUALITY), true, true, 3));
+        sellers.add(new Seller(Arrays.asList(Category.PRICE, Category.PRICE, SELLER_QUALITY), true, true, 4));
+        sellers.add(new Seller(Arrays.asList(Category.INFORMATION_QUALITY, SELLER_QUALITY, Category.INFORMATION_QUALITY), false, false, 2));
+        sellers.add(new Seller(Arrays.asList(Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY, Category.PRODUCT_QUALITY), false, false, 1));
 
         return sellers;
     }

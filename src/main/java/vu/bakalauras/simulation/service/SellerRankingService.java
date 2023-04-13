@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import vu.bakalauras.simulation.Category;
 import vu.bakalauras.simulation.model.seller.Seller;
 import vu.bakalauras.simulation.model.shop.CriteriaWeight;
+import vu.bakalauras.simulation.model.shop.Shop;
 import vu.bakalauras.simulation.model.shop.ShopCriteria;
 
 import java.util.Comparator;
@@ -35,11 +36,21 @@ public class SellerRankingService {
             seller.sellerScore = sellerScore;
         }
 
+        calculatePenaltyPointsForProducts(sellers);
+
         sellers = sellers
                 .stream()
                 .sorted(Comparator.comparingDouble(Seller::getSellerScore).reversed())
                 .collect(Collectors.toList());
 
         return sellers;
+    }
+
+    private void calculatePenaltyPointsForProducts(List<Seller> sellers) {
+        for (Seller seller : sellers) {
+            if (seller.productAmount > 3) {
+                seller.sellerScore -= (seller.productAmount - 3) * 0.65;
+            }
+        }
     }
 }

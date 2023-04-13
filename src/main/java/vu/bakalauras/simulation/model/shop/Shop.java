@@ -27,6 +27,7 @@ public class Shop {
     public int totalSales = 0;
     public int dailySales = 0;
     public int minimumDailySales = 0;
+    public int highestSellerPosition = -1;
     public BigDecimal generatedRevenue = BigDecimal.ZERO;
     public BigDecimal averageProductPrice;
     public double score;

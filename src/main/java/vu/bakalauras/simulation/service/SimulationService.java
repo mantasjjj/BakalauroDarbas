@@ -10,6 +10,7 @@ import vu.bakalauras.simulation.model.shop.CriteriaWeight;
 import vu.bakalauras.simulation.model.shop.Shop;
 import vu.bakalauras.simulation.model.shop.ShopCriteria;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,7 @@ public class SimulationService {
                 shop.totalSales += successfulPurchase;
                 shop.dailySales += successfulPurchase;
             }
+            rotateTopSellers(shop.sellers);
         }
         return shops;
     }
@@ -97,7 +99,6 @@ public class SimulationService {
         List<Seller> highestRankedSellers = sellers.stream().filter(s -> !s.bankrupt).limit(7).collect(Collectors.toList()); //7, nes Amazon rodo tik 7
         Optional<Seller> chosenSeller;
 
-        //todo: improve with mandatory and optional
         for (Seller seller : highestRankedSellers) {
             for (Category sellerCategory : seller.focusZones) {
                 seller.criteriaMatch += (int) customerCriteria.stream().filter(c -> c.category == sellerCategory).count();
@@ -137,6 +138,12 @@ public class SimulationService {
             shop.dailySales = 0;
         });
         return shops;
+    }
+
+    private void rotateTopSellers(List<Seller> sellers) {
+        Collections.swap(sellers, 0, 10);
+        Collections.swap(sellers, 1, 11);
+        Collections.swap(sellers, 2, 12);
     }
 
     public List<Shop> resetShopScores(List<Shop> shops) {

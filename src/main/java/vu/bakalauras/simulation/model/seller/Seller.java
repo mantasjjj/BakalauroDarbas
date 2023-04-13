@@ -22,13 +22,19 @@ public class Seller {
     public int dailySales = 0;
     public int daysWithoutSale = 0;
     public int maxDaysWithoutSale = 10;
+    public int productAmount;
     public boolean bankrupt;
+    public boolean hasSeasonalProducts;
+    public boolean isFrequentPromoter;
 
     public Seller() {
 
     }
 
-    public Seller(List<Category> focusZones) {
+    public Seller(List<Category> focusZones, boolean hasSeasonalProducts, boolean isFrequentPromoter, int productAmount) {
         this.focusZones = focusZones;
+        this.hasSeasonalProducts = hasSeasonalProducts;
+        this.isFrequentPromoter = isFrequentPromoter;
+        this.productAmount = productAmount;
     }
 }
