@@ -40,6 +40,10 @@ public class Shop {
     public Shop() {
     }
 
+    public Shop(List<ShopCriteria> shopCriteria) {
+        this.shopCriteria = shopCriteria;
+    }
+
     public Shop(String shopName, String searchEngineName, List<ShopCriteria> shopCriteria, List<Seller> sellers, BigDecimal averageProductPrice, Owner owner) {
         this.shopName = shopName;
         this.searchEngineName = searchEngineName;

@@ -9,16 +9,24 @@ import vu.bakalauras.simulation.model.customer.CustomerCriteria;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class CustomerGenerator {
-    private static final Random RANDOM = new Random();
 
     public List<Customer> generateCustomerList() {
-        return generateCustomerList(0);
+        return generateCustomerList(0, 0);
     }
 
-    public List<Customer> generateCustomerList(int size) {
+    public List<Customer> generateCustomerList(int size, long seed) {
+        Random RANDOM;
+        if (seed != 0) {
+            RANDOM = new Random();
+            RANDOM.setSeed(seed);
+        } else {
+            RANDOM = new Random();
+        }
+
         if (size == 0) {
             size = 1000;
         }

@@ -84,10 +84,10 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         shops.add(new Shop("Shop 1", "KM1", etsyCriteria, fillRankedSellers(etsyCriteria, etsySellers), BigDecimal.valueOf(30), etsyOwner));
 
         //New Shop
-        List<ShopCriteria> newShopCriteria = fillGeneticAlgorithmCriteria();
-        List<Seller> newShopSellers = fillInitialSellers();
-        Owner newShopOwner = new Owner(7, 300);
-        shops.add(new Shop("GA Shop", "GA1", newShopCriteria, fillRankedSellers(newShopCriteria, newShopSellers), BigDecimal.ZERO, newShopOwner));
+//        List<ShopCriteria> newShopCriteria = fillGeneticAlgorithmCriteria();
+//        List<Seller> newShopSellers = fillInitialSellers();
+//        Owner newShopOwner = new Owner(7, 300);
+//        shops.add(new Shop("GA Shop", "GA1", newShopCriteria, fillRankedSellers(newShopCriteria, newShopSellers), BigDecimal.ZERO, newShopOwner));
 
         return shops;
     }

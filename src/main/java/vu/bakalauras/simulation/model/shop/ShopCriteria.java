@@ -31,6 +31,6 @@ public class ShopCriteria {
     }
 
     public int getCriteriaWeightRating() {
-        return criteriaWeight.rating;
+        return criteriaWeight != null ? criteriaWeight.rating : 0;
     }
 }

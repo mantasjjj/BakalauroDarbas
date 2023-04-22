@@ -77,13 +77,15 @@ public class SimulationService {
 
     public static double getTotalShopScore(List<ShopCriteria> shopCriteria) {
         return shopCriteria.stream()
-                .filter(s -> s.criteriaWeight != CriteriaWeight.HIGHEST && s.criteriaWeight != CriteriaWeight.AD)
+                .filter(s -> s.criteriaWeight != CriteriaWeight.HIGHEST && s.criteriaWeight != CriteriaWeight.AD &&
+                        s.criteriaWeight != null)
                 .map(s -> s.criteriaWeight.rating)
                 .reduce(0, Integer::sum);
     }
 
     public static double getCriteriaScore(List<ShopCriteria> filteredShopCriteria, double totalCriteriaScore) {
         double totalScore = filteredShopCriteria.stream().map(ShopCriteria::getCriteriaWeightRating).reduce(0, Integer::sum);
+
         return totalScore / totalCriteriaScore;
     }
 

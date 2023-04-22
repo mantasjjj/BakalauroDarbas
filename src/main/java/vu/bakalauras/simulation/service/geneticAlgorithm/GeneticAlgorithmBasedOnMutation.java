@@ -1,4 +1,4 @@
-package vu.bakalauras.simulation.service;
+package vu.bakalauras.simulation.service.geneticAlgorithm;
 
 import vu.bakalauras.simulation.Category;
 import vu.bakalauras.simulation.model.customer.CriteriaImportance;
@@ -7,28 +7,30 @@ import vu.bakalauras.simulation.model.owner.Owner;
 import vu.bakalauras.simulation.model.shop.CriteriaWeight;
 import vu.bakalauras.simulation.model.shop.Shop;
 import vu.bakalauras.simulation.model.shop.ShopCriteria;
+import vu.bakalauras.simulation.service.CustomerGenerator;
+import vu.bakalauras.simulation.service.SimulationService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class GeneticAlgorithm {
+public class GeneticAlgorithmBasedOnMutation {
     private static final Random RANDOM = new Random();
 
     public static void main(String[] args) {
-        GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
+        GeneticAlgorithmBasedOnMutation geneticAlgorithmBasedOnMutation = new GeneticAlgorithmBasedOnMutation();
         CustomerGenerator customerGenerator = new CustomerGenerator();
         SimulationService simulationService = new SimulationService();
-        List<Customer> customerList = customerGenerator.generateCustomerList(100);
-        Shop shop = geneticAlgorithm.fillNewShop(geneticAlgorithm);
+        List<Customer> customerList = customerGenerator.generateCustomerList();
+        Shop shop = geneticAlgorithmBasedOnMutation.fillNewShop(geneticAlgorithmBasedOnMutation);
         Shop mutatedShop;
-        double totalScore = geneticAlgorithm.getNewTotalScore(customerList, shop, simulationService);
+        double totalScore = geneticAlgorithmBasedOnMutation.getNewTotalScore(customerList, shop, simulationService);
         double previousTotalScore = totalScore;
 
         while (totalScore < 170) {
-            mutatedShop = geneticAlgorithm.mutateShopCriteria(shop);
-            totalScore = geneticAlgorithm.getNewTotalScore(customerList, shop, simulationService);
+            mutatedShop = geneticAlgorithmBasedOnMutation.mutateShopCriteria(shop);
+            totalScore = geneticAlgorithmBasedOnMutation.getNewTotalScore(customerList, shop, simulationService);
 
             if (totalScore > previousTotalScore) {
                 shop = mutatedShop;
@@ -45,9 +47,9 @@ public class GeneticAlgorithm {
         }
     }
 
-    public Shop fillNewShop(GeneticAlgorithm geneticAlgorithm) {
+    public Shop fillNewShop(GeneticAlgorithmBasedOnMutation geneticAlgorithmBasedOnMutation) {
         List<ShopCriteria> randomlyFilledCriteria = new ArrayList<>();
-        List<ShopCriteria> allCriteria = geneticAlgorithm.getAllPossibleValues();
+        List<ShopCriteria> allCriteria = geneticAlgorithmBasedOnMutation.getAllPossibleValues();
         while (randomlyFilledCriteria.size() < 30) {
             ShopCriteria randomCriteria = allCriteria.get(RANDOM.nextInt(allCriteria.size()));
             if (randomlyFilledCriteria.stream().filter(s -> s.name.equals(randomCriteria.name)).findFirst().isEmpty()) {
