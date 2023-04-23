@@ -19,12 +19,12 @@ public class CustomerGenerator {
     }
 
     public List<Customer> generateCustomerList(int size, long seed) {
-        Random RANDOM;
+        Random random;
         if (seed != 0) {
-            RANDOM = new Random();
-            RANDOM.setSeed(seed);
+            random = new Random();
+            random.setSeed(seed);
         } else {
-            RANDOM = new Random();
+            random = new Random();
         }
 
         if (size == 0) {
@@ -39,7 +39,7 @@ public class CustomerGenerator {
 
             while (customerCriteria.size() != 5) {
                 Category[] categories = Category.values();
-                Category randomCategory = categories[RANDOM.nextInt(categories.length)];
+                Category randomCategory = categories[random.nextInt(categories.length)];
                 CustomerCriteria randomCustomerCriteria = new CustomerCriteria(randomCategory, CriteriaImportance.MANDATORY);
                 customerCriteria.add(randomCustomerCriteria);
             }

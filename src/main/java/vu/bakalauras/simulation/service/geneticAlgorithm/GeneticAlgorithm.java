@@ -21,7 +21,7 @@ public class GeneticAlgorithm {
     int generationCount = 0;
 
     public static void main(String[] args) {
-        Random rn = new Random();
+        Random random = new Random();
 
         GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
 
@@ -32,14 +32,14 @@ public class GeneticAlgorithm {
 
         System.out.println("Generation: " + geneticAlgorithm.generationCount + " Fittest: " + geneticAlgorithm.population.fittest);
 
-        while (geneticAlgorithm.population.fittest < 200 || !isMinimumCriteriaReached(geneticAlgorithm.population.individuals.get(0))) {
+        while (geneticAlgorithm.population.fittest < 190 || !isMinimumCriteriaReached(geneticAlgorithm.population.individuals.get(0))) {
             ++geneticAlgorithm.generationCount;
 
             geneticAlgorithm.selection();
 
             geneticAlgorithm.crossover();
 
-            if (rn.nextInt() % 7 < 5) {
+            if (random.nextInt() % 7 < 5) {
                 geneticAlgorithm.mutation();
             }
 
@@ -68,14 +68,14 @@ public class GeneticAlgorithm {
     }
 
     public void crossover() {
-        Random rn = new Random();
+        Random random = new Random();
         List<ShopCriteria> shopCriteriaForFittest = new ArrayList<>();
         List<ShopCriteria> shopCriteriaForSecondFittest = new ArrayList<>();
 
         int size = population.individuals.get(0).shopCriteria.size();
-        int crossOverPoint = size / 5;
+        int crossOverPoint = size / 2;
 
-//        int crossOverPoint = rn.nextInt(size);
+//        int crossOverPoint = random.nextInt(size);
 
         for (int i = 0; i < size; i++) {
             if (i <= crossOverPoint) {
@@ -95,11 +95,10 @@ public class GeneticAlgorithm {
             }
         }
 
-        population.individuals.get(0).shopCriteria = shopCriteriaForFittest;
-        population.individuals.get(1).shopCriteria = shopCriteriaForSecondFittest;
+        fittest.shopCriteria = shopCriteriaForFittest;
+        secondFittest.shopCriteria = shopCriteriaForSecondFittest;
     }
 
-    //Mutation
     public void mutation() {
         Random rn = new Random();
         List<CriteriaWeight> criteriaWeights = Arrays.asList(CriteriaWeight.HIGH, CriteriaWeight.MEDIUM, CriteriaWeight.LOW);
@@ -107,16 +106,12 @@ public class GeneticAlgorithm {
         int mutationPoint = rn.nextInt(population.individuals.get(0).shopCriteria.size());
         int randomWeight = rn.nextInt(criteriaWeights.size());
 
-        if (fittest.shopCriteria.get(mutationPoint).criteriaWeight == null) {
-            population.individuals.get(0).shopCriteria.get(mutationPoint).criteriaWeight = criteriaWeights.get(randomWeight);
-        }
+        population.individuals.get(0).shopCriteria.get(mutationPoint).criteriaWeight = criteriaWeights.get(randomWeight);
 
         mutationPoint = rn.nextInt(population.individuals.get(0).shopCriteria.size());
         randomWeight = rn.nextInt(criteriaWeights.size());
 
-        if (secondFittest.shopCriteria.get(mutationPoint).criteriaWeight == null) {
-            population.individuals.get(0).shopCriteria.get(mutationPoint).criteriaWeight = criteriaWeights.get(randomWeight);
-        }
+        population.individuals.get(0).shopCriteria.get(mutationPoint).criteriaWeight = criteriaWeights.get(randomWeight);
     }
 
     public Shop getFittestOffspring() {
@@ -134,7 +129,8 @@ public class GeneticAlgorithm {
 
         int leastFittestIndex = population.getLeastFittestIndex();
 
-        population.individuals.add(leastFittestIndex, getFittestOffspring());
+        population.individuals.remove(leastFittestIndex);
+        population.individuals.add(getFittestOffspring());
     }
 
     private static boolean isMinimumCriteriaReached(Shop shop) {
