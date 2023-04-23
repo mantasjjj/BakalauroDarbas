@@ -1,5 +1,6 @@
 package vu.bakalauras.simulation.service.geneticAlgorithm;
 
+import vu.bakalauras.simulation.Category;
 import vu.bakalauras.simulation.model.shop.CriteriaWeight;
 import vu.bakalauras.simulation.model.shop.Shop;
 import vu.bakalauras.simulation.model.shop.ShopCriteria;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static vu.bakalauras.simulation.service.geneticAlgorithm.Population.getTotalScore;
 
@@ -32,7 +34,7 @@ public class GeneticAlgorithm {
 
         System.out.println("Generation: " + geneticAlgorithm.generationCount + " Fittest: " + geneticAlgorithm.population.fittest);
 
-        while (geneticAlgorithm.population.fittest < 190 || !isMinimumCriteriaReached(geneticAlgorithm.population.individuals.get(0))) {
+        while (geneticAlgorithm.population.fittest < 180 || !isMinimumCriteriaReached(geneticAlgorithm.population.individuals.get(0))) {
             ++geneticAlgorithm.generationCount;
 
             geneticAlgorithm.selection();
@@ -53,10 +55,23 @@ public class GeneticAlgorithm {
 
         System.out.println("\nSolution found in generation " + geneticAlgorithm.generationCount);
         System.out.println("Fitness: " + geneticAlgorithm.population.getFittest().score);
-        System.out.print("Criteria model: ");
-        for (int i = 0; i < geneticAlgorithm.population.getFittest().shopCriteria.size(); i++) {
-            System.out.println("Criteria: " + geneticAlgorithm.population.getFittest().shopCriteria.get(i).name);
-            System.out.println("Criteria: " + geneticAlgorithm.population.getFittest().shopCriteria.get(i).criteriaWeight);
+//        System.out.print("Criteria model: ");
+//        for (int i = 0; i < geneticAlgorithm.population.getFittest().shopCriteria.size(); i++) {
+//            System.out.println("Criteria: " + geneticAlgorithm.population.getFittest().shopCriteria.get(i).name);
+//            System.out.println("Criteria: " + geneticAlgorithm.population.getFittest().shopCriteria.get(i).criteriaWeight);
+//        }
+
+        List<ShopCriteria> finalShopCriteria = geneticAlgorithm.population.getFittest().shopCriteria
+                .stream()
+                .filter(s -> s.criteriaWeight != null)
+                .collect(Collectors.toList());
+        for (ShopCriteria shopCriteria : finalShopCriteria) {
+            StringBuilder categoriesOutput = new StringBuilder();
+            for (Category category : shopCriteria.categories) {
+                categoriesOutput.append("Category.").append(category).append(", ");
+            }
+            System.out.println("shopCriteria.add(new ShopCriteria(\"" + shopCriteria.name +
+                    "\", Arrays.asList(" + categoriesOutput + "), CriteriaWeight." + shopCriteria.criteriaWeight + "));");
         }
     }
 
@@ -73,7 +88,7 @@ public class GeneticAlgorithm {
         List<ShopCriteria> shopCriteriaForSecondFittest = new ArrayList<>();
 
         int size = population.individuals.get(0).shopCriteria.size();
-        int crossOverPoint = size / 2;
+        int crossOverPoint = size / 4;
 
 //        int crossOverPoint = random.nextInt(size);
 

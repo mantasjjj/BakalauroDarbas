@@ -24,11 +24,11 @@ public class Population {
     public void initializeInitialPopulation() {
         List<Shop> initialShops = new ArrayList<>();
 
-        fillShopsWithSpecifiedWeight(initialShops, CriteriaWeight.HIGH);
-        fillShopsWithSpecifiedWeight(initialShops, CriteriaWeight.MEDIUM);
-        fillShopsWithSpecifiedWeight(initialShops, CriteriaWeight.LOW);
+//        fillShopsWithSpecifiedWeight(initialShops, CriteriaWeight.HIGH);
+//        fillShopsWithSpecifiedWeight(initialShops, CriteriaWeight.MEDIUM);
+//        fillShopsWithSpecifiedWeight(initialShops, CriteriaWeight.LOW);
 
-//        fillIndividualsWithExistingData(initialShops);
+        fillIndividualsWithExistingData(initialShops);
 
 //        for (int i = 0; i < 1000; i++) {
 //            initialShops.add(fillNewShop());

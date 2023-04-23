@@ -84,10 +84,10 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         shops.add(new Shop("Shop 1", "KM1", etsyCriteria, fillRankedSellers(etsyCriteria, etsySellers), BigDecimal.valueOf(30), etsyOwner));
 
         //New Shop
-//        List<ShopCriteria> newShopCriteria = fillGeneticAlgorithmCriteria();
-//        List<Seller> newShopSellers = fillInitialSellers();
-//        Owner newShopOwner = new Owner(7, 300);
-//        shops.add(new Shop("GA Shop", "GA1", newShopCriteria, fillRankedSellers(newShopCriteria, newShopSellers), BigDecimal.ZERO, newShopOwner));
+        List<ShopCriteria> newShopCriteria = fillGA4ShopCriteria();
+        List<Seller> newShopSellers = fillInitialSellers();
+        Owner newShopOwner = new Owner(7, 300);
+        shops.add(new Shop("GA Shop", "GA1", newShopCriteria, fillRankedSellers(newShopCriteria, newShopSellers), BigDecimal.ZERO, newShopOwner));
 
         return shops;
     }
@@ -382,7 +382,7 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
 
     private List<ShopCriteria> fillGeneticAlgorithmCriteria() {
         List<ShopCriteria> shopCriteria = new ArrayList<>();
-        
+
         shopCriteria.add(new ShopCriteria("Produkto atnaujinimo naujumas", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
         shopCriteria.add(new ShopCriteria("Vartotojo termino buvimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
         shopCriteria.add(new ShopCriteria("Aukšta nuotraukų kokybė", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
@@ -416,4 +416,196 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
 
         return shopCriteria;
     }
+
+    public List<ShopCriteria> fillGA1ShopCriteria() {
+        //Sukurta naudojant visus kriterijus be svoriu
+        //Crossover - atsitiktinis
+        List<ShopCriteria> shopCriteria = new ArrayList<>();
+
+        shopCriteria.add(new ShopCriteria("Vartotojo termino ar jo sinonimų buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Optimali produkto kaina", Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Geras peržiūros / pardavimo santykis", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.PHOTOS), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino ar jo sinonimų buvimas „Search terms“", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Pavadinimo kokybė", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavimų skaičius", Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Klientų atsiliepimų skaičius", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_REVIEWS), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Aukšta nuotraukų kokybė", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto skelbimo užbaigtumas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto ypatybių išrašymas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Geras POP (Perfect order percentage)", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produktų inventoriaus sekimas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY, Category.SHIPPING), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Gera turinio kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Atsakyti klausimai", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo raktažodžiai", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Kategorijos", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Užsakymų skaičius", Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Aukštos kokybės nuotraukos", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo atsakymo dažnis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Konkurencinga produkto kaina", Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto turinio kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino sinonimų buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Nemokamas siuntimas", Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Paspaudimų skaičius", Arrays.asList(Category.PHOTOS), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Įsiminimų skaičius", Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Užpildytos specifikacijos", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto puslapio greitis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto puslapyje esančios ALT žymos", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Meta žymos", Arrays.asList(Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Raktažodžiai Meta žymose", Arrays.asList(Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino tikslus atitikimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino sinonimų buvimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino sinonimų buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto pavadinimo kokybė", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Kategorijų pridėjimas", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Pardavėjo klientų aptarnavimo įvertis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo atsiliepimai", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo baigtinumas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Tinkamai panaudotos žodžių kombinacijos", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Papildomos produkto nuotraukos", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto vaizdo įrašai", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Alternatyvios HTML žymos", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Raktažodžiai alternatyviosiose HTML žymose", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Pardavėjo parduotuvės taisyklių baigtinumas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo grąžinimo taisyklių baigtinumas", Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto kaina", Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto skelbimo baigtinumas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto pardavimai", Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino tikslus atitikimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino buvimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino buvimas žymose", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino buvimas žymose", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto paspaudimai", Arrays.asList(Category.PHOTOS), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto įsiminimai", Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo klientų aptarnavimo įvertis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto atributai atitinkantys paieškos terminą", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Pardavėjo taisyklių laikymosi įvertis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo „Apie” skilties baigtinumas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo parduotuvės pristatymo skilties baigtinumas", Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Atsiliepimai", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto ir pirkėjo lokacija", Arrays.asList(), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto pavadinimo išvertimas į parduotuvės nurodytą kalbą", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Aukšta nuotraukų kokybė", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo komunikavimas su buvusiais klientais", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Specifiškai AliExpress atrinkti produktai AliExpress Choice", Arrays.asList(Category.PRODUCT_QUALITY, Category.PRICE, Category.INFORMATION_QUALITY, Category.SELLER_QUALITY, Category.PHOTOS, Category.SHIPPING, Category.PRODUCT_REVIEWS), CriteriaWeight.HIGH));
+
+        return shopCriteria;
+    }
+    
+    public List<ShopCriteria> fillGA2ShopCriteria() {
+        //Sukurta naudojant visus kriterijus be svoriu
+        //Crossover - 50%
+        List<ShopCriteria> shopCriteria = new ArrayList<>();
+
+        shopCriteria.add(new ShopCriteria("Geras peržiūros / pardavimo santykis", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.PHOTOS), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino ar jo sinonimų buvimas „Search terms“", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto pavadinime esantys nereikalingi žodžiai", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Pardavimų skaičius", Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Tinkamai parinktas nuotraukų dydis", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto skelbimo užbaigtumas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto ypatybių išrašymas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo raktažodžiai", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Užsakymų skaičius", Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto puslapio greitis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto puslapio pritaikymas įvairiems įrenginiams", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Meta žymos", Arrays.asList(Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Raktažodžiai Meta žymose", Arrays.asList(Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino sinonimų buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo klientų aptarnavimo įvertis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto paspaudimai", Arrays.asList(Category.PHOTOS), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino buvimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto įsiminimai", Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto pardavimų skaičius", Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Kainos korektiškumas", Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo taisyklių laikymosi įvertis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo „Apie” skilties baigtinumas", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo parduotuvės pristatymo skilties baigtinumas", Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto įkėlimo naujumas", Arrays.asList(), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto žymų išvertimas į parduotuvės nurodytą kalbą", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Aukšta nuotraukų kokybė", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Pagrindinės nuotraukos tikslumas", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Specifiškai AliExpress atrinkti produktai AliExpress Choice", Arrays.asList(Category.PRODUCT_QUALITY, Category.PRICE, Category.INFORMATION_QUALITY, Category.SELLER_QUALITY, Category.PHOTOS, Category.SHIPPING, Category.PRODUCT_REVIEWS), CriteriaWeight.MEDIUM));
+
+        return shopCriteria;
+    }
+    
+    public List<ShopCriteria> fillGA3ShopCriteria() {
+        //Sukurta naudojant visus kriterijus be svoriu
+        //Crossover - 25%
+        List<ShopCriteria> shopCriteria = new ArrayList<>();
+
+        shopCriteria.add(new ShopCriteria("Produkto pavadinime esantys nereikalingi žodžiai", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Pardavimų skaičius", Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Geras POP (Perfect order percentage)", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo raktažodžiai", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Kategorijos", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Atsiliepimų bendras įvertis", Arrays.asList(Category.PRODUCT_QUALITY, Category.PRODUCT_REVIEWS), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino sinonimų buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto puslapio pritaikymas įvairiems įrenginiams", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto ALT žymose esantys raktažodžiai", Arrays.asList(Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Meta žymos", Arrays.asList(Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino sinonimų buvimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto pavadinimo kokybė", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Aukštos kokybės nuotraukos", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Pardavėjo klientų aptarnavimo įvertis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Pardavėjo atsiliepimai", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_REVIEWS, Category.PRODUCT_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto vaizdo įrašai", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Alternatyvios HTML žymos", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto kaina", Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto įsiminimai", Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto pardavimai", Arrays.asList(Category.PRODUCT_QUALITY, Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino tikslus atitikimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino buvimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Kainos korektiškumas", Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Pardavėjo parduotuvės pristatymo skilties baigtinumas", Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto žymų išvertimas į parduotuvės nurodytą kalbą", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Aukšta nuotraukų kokybė", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Specifiškai AliExpress atrinkti produktai AliExpress Choice", Arrays.asList(Category.PRODUCT_QUALITY, Category.PRICE, Category.INFORMATION_QUALITY, Category.SELLER_QUALITY, Category.PHOTOS, Category.SHIPPING, Category.PRODUCT_REVIEWS), CriteriaWeight.HIGH));
+
+        return shopCriteria;
+    }
+
+    public List<ShopCriteria> fillGA4ShopCriteria() {
+        //Sukurta naudojant egzistuojancius modelius
+        //Crossover - 25%
+        List<ShopCriteria> shopCriteria = new ArrayList<>();
+
+        shopCriteria.add(new ShopCriteria("Vartotojo termino ar jo sinonimų buvimas pavadinime", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto reklama", Arrays.asList(), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino ar jo sinonimų buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Optimali produkto kaina", Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Geras peržiūros / pardavimo santykis", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.PHOTOS), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Kokybiški „Search terms", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino ar jo sinonimų buvimas „Search terms“", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino dalies buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Aukštos kokybės nuotraukos", Arrays.asList(Category.PHOTOS, Category.SELLER_QUALITY, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Pardavėjo atsakymo dažnis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Konkurencinga produkto kaina", Arrays.asList(Category.PRICE, Category.PRODUCT_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto turinio kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Produkto aprašymo kokybė", Arrays.asList(Category.SELLER_QUALITY, Category.PRODUCT_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto kategorijos", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Vartotojo termino sinonimų buvimas aprašyme", Arrays.asList(Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Nemokamas siuntimas", Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Siuntimas su grąžinimu", Arrays.asList(Category.SELLER_QUALITY, Category.SHIPPING), CriteriaWeight.MEDIUM));
+        shopCriteria.add(new ShopCriteria("Paspaudimų skaičius", Arrays.asList(Category.PHOTOS), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Įsiminimų skaičius", Arrays.asList(Category.PRODUCT_QUALITY, Category.PHOTOS, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Užpildytos specifikacijos", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto puslapio greitis", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto puslapio pritaikymas įvairiems įrenginiams", Arrays.asList(Category.SELLER_QUALITY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto puslapyje esančios ALT žymos", Arrays.asList(Category.SELLER_QUALITY, Category.INFORMATION_QUALITY, Category.SEARCH_RESULT_ACCURACY), CriteriaWeight.LOW));
+        shopCriteria.add(new ShopCriteria("Produkto ALT žymose esantys raktažodžiai", Arrays.asList(Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Meta žymos", Arrays.asList(Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.HIGH));
+        shopCriteria.add(new ShopCriteria("Raktažodžiai Meta žymose", Arrays.asList(Category.SELLER_QUALITY, Category.SEARCH_RESULT_ACCURACY, Category.INFORMATION_QUALITY), CriteriaWeight.LOW));
+
+        return shopCriteria;
+    }
+
 }
