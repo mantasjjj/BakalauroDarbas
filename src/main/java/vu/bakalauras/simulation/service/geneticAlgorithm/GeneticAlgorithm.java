@@ -34,7 +34,7 @@ public class GeneticAlgorithm {
 
         System.out.println("Generation: " + geneticAlgorithm.generationCount + " Fittest: " + geneticAlgorithm.population.fittest);
 
-        while (geneticAlgorithm.population.fittest < 180 || !isMinimumCriteriaReached(geneticAlgorithm.population.individuals.get(0))) {
+        while (geneticAlgorithm.population.fittest < 160 || !isMinimumCriteriaReached(geneticAlgorithm.population.individuals.get(0))) {
             ++geneticAlgorithm.generationCount;
 
             geneticAlgorithm.selection();
@@ -55,11 +55,7 @@ public class GeneticAlgorithm {
 
         System.out.println("\nSolution found in generation " + geneticAlgorithm.generationCount);
         System.out.println("Fitness: " + geneticAlgorithm.population.getFittest().score);
-//        System.out.print("Criteria model: ");
-//        for (int i = 0; i < geneticAlgorithm.population.getFittest().shopCriteria.size(); i++) {
-//            System.out.println("Criteria: " + geneticAlgorithm.population.getFittest().shopCriteria.get(i).name);
-//            System.out.println("Criteria: " + geneticAlgorithm.population.getFittest().shopCriteria.get(i).criteriaWeight);
-//        }
+        System.out.println("Criteria model:");
 
         List<ShopCriteria> finalShopCriteria = geneticAlgorithm.population.getFittest().shopCriteria
                 .stream()
@@ -89,6 +85,7 @@ public class GeneticAlgorithm {
 
         int size = population.individuals.get(0).shopCriteria.size();
         int crossOverPoint = size / 4;
+        crossOverPoint = size - crossOverPoint;
 
 //        int crossOverPoint = random.nextInt(size);
 
