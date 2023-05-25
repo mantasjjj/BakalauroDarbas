@@ -60,54 +60,54 @@ public class AbstractCommandLineRunner implements CommandLineRunner {
         List<Shop> shops = new ArrayList<>();
 
         //Amazon
-//        List<ShopCriteria> amazonCriteria = fillAmazonShopCriteria();
-//        List<Seller> amazonSellers = fillInitialSellers();
-//        Owner amazonOwner = new Owner(365, 300);
-//        shops.add(new Shop("Shop 3", "KM3", amazonCriteria, fillRankedSellers(amazonCriteria, amazonSellers), BigDecimal.valueOf(141.74), amazonOwner));
-//
-//        //EBay
-//        List<ShopCriteria> ebayCriteria = fillEBayShopCriteria();
-//        List<Seller> ebaySellers = fillInitialSellers();
-//        Owner ebayOwner = new Owner(149, 300);
-//        shops.add(new Shop("Shop 2", "KM2", ebayCriteria, fillRankedSellers(ebayCriteria, ebaySellers), BigDecimal.valueOf(140.8), ebayOwner));
-//
-//        //AliExpress
-//        List<ShopCriteria> aliExpressCriteria = fillAliExpressShopCriteria();
-//        List<Seller> aliExpressSellers = fillInitialSellers();
-//        Owner aliExpressOwner = new Owner(251, 300);
-//        shops.add(new Shop("Shop 4", "KM4", aliExpressCriteria, fillRankedSellers(aliExpressCriteria, aliExpressSellers), BigDecimal.valueOf(200.74), aliExpressOwner));
-//
-//        //Etsy
-//        List<ShopCriteria> etsyCriteria = fillEtsyShopCriteria();
-//        List<Seller> etsySellers = fillInitialSellers();
-//        Owner etsyOwner = new Owner(7, 300);
-//        shops.add(new Shop("Shop 1", "KM1", etsyCriteria, fillRankedSellers(etsyCriteria, etsySellers), BigDecimal.valueOf(30), etsyOwner));
-//
-//        //New Shop
-//        List<ShopCriteria> newShopCriteria = fillGA3ShopCriteria();
-//        List<Seller> newShopSellers = fillInitialSellers();
-//        Owner newShopOwner = new Owner(7, 300);
-//        shops.add(new Shop("GA3 Shop", "GA3", newShopCriteria, fillRankedSellers(newShopCriteria, newShopSellers), BigDecimal.ZERO, newShopOwner));
-//
-        List<ShopCriteria> GA1 = fillGA1ShopCriteria();
+        List<ShopCriteria> amazonCriteria = fillAmazonShopCriteria();
+        List<Seller> amazonSellers = fillInitialSellers();
+        Owner amazonOwner = new Owner(365, 300);
+        shops.add(new Shop("Shop 3", "KM3", amazonCriteria, fillRankedSellers(amazonCriteria, amazonSellers), BigDecimal.valueOf(141.74), amazonOwner));
+
+        //EBay
+        List<ShopCriteria> ebayCriteria = fillEBayShopCriteria();
+        List<Seller> ebaySellers = fillInitialSellers();
+        Owner ebayOwner = new Owner(149, 300);
+        shops.add(new Shop("Shop 2", "KM2", ebayCriteria, fillRankedSellers(ebayCriteria, ebaySellers), BigDecimal.valueOf(140.8), ebayOwner));
+
+        //AliExpress
+        List<ShopCriteria> aliExpressCriteria = fillAliExpressShopCriteria();
+        List<Seller> aliExpressSellers = fillInitialSellers();
+        Owner aliExpressOwner = new Owner(251, 300);
+        shops.add(new Shop("Shop 4", "KM4", aliExpressCriteria, fillRankedSellers(aliExpressCriteria, aliExpressSellers), BigDecimal.valueOf(200.74), aliExpressOwner));
+
+        //Etsy
+        List<ShopCriteria> etsyCriteria = fillEtsyShopCriteria();
+        List<Seller> etsySellers = fillInitialSellers();
+        Owner etsyOwner = new Owner(7, 300);
+        shops.add(new Shop("Shop 1", "KM1", etsyCriteria, fillRankedSellers(etsyCriteria, etsySellers), BigDecimal.valueOf(30), etsyOwner));
+
+        //New Shop
+        List<ShopCriteria> newShopCriteria = fillGA3ShopCriteria();
         List<Seller> newShopSellers = fillInitialSellers();
-        Owner newShopOwner = new Owner(100, 300);
-        shops.add(new Shop("GA1 Shop", "GA1", GA1, fillRankedSellers(GA1, newShopSellers), BigDecimal.ZERO, newShopOwner));
-
-        List<ShopCriteria> GA2 = fillGA2ShopCriteria();
-        List<Seller> newShopSellers1 = fillInitialSellers();
-        Owner newShopOwner1 = new Owner(7, 300);
-        shops.add(new Shop("GA2 Shop", "GA2", GA2, fillRankedSellers(GA2, newShopSellers1), BigDecimal.ZERO, newShopOwner1));
-
-        List<ShopCriteria> GA3 = fillGA3ShopCriteria();
-        List<Seller> newShopSellers2 = fillInitialSellers();
-        Owner newShopOwner2 = new Owner(7, 300);
-        shops.add(new Shop("GA3 Shop", "GA3", GA3, fillRankedSellers(GA3, newShopSellers2), BigDecimal.ZERO, newShopOwner2));
-
-        List<ShopCriteria> GA4 = fillGA4ShopCriteria();
-        List<Seller> newShopSellers3 = fillInitialSellers();
-        Owner newShopOwner3 = new Owner(7, 300);
-        shops.add(new Shop("GA4 Shop", "GA4", GA4, fillRankedSellers(GA4, newShopSellers3), BigDecimal.ZERO, newShopOwner3));
+        Owner newShopOwner = new Owner(7, 300);
+        shops.add(new Shop("GA3 Shop", "GA3", newShopCriteria, fillRankedSellers(newShopCriteria, newShopSellers), BigDecimal.ZERO, newShopOwner));
+//
+//        List<ShopCriteria> GA1 = fillGA1ShopCriteria();
+//        List<Seller> newShopSellers = fillInitialSellers();
+//        Owner newShopOwner = new Owner(100, 300);
+//        shops.add(new Shop("GA1 Shop", "GA1", GA1, fillRankedSellers(GA1, newShopSellers), BigDecimal.ZERO, newShopOwner));
+//
+//        List<ShopCriteria> GA2 = fillGA2ShopCriteria();
+//        List<Seller> newShopSellers1 = fillInitialSellers();
+//        Owner newShopOwner1 = new Owner(7, 300);
+//        shops.add(new Shop("GA2 Shop", "GA2", GA2, fillRankedSellers(GA2, newShopSellers1), BigDecimal.ZERO, newShopOwner1));
+//
+//        List<ShopCriteria> GA3 = fillGA3ShopCriteria();
+//        List<Seller> newShopSellers2 = fillInitialSellers();
+//        Owner newShopOwner2 = new Owner(7, 300);
+//        shops.add(new Shop("GA3 Shop", "GA3", GA3, fillRankedSellers(GA3, newShopSellers2), BigDecimal.ZERO, newShopOwner2));
+//
+//        List<ShopCriteria> GA4 = fillGA4ShopCriteria();
+//        List<Seller> newShopSellers3 = fillInitialSellers();
+//        Owner newShopOwner3 = new Owner(7, 300);
+//        shops.add(new Shop("GA4 Shop", "GA4", GA4, fillRankedSellers(GA4, newShopSellers3), BigDecimal.ZERO, newShopOwner3));
 
         return shops;
     }
