@@ -1,4 +1,4 @@
-# Bakalauro Darbas - Elektroninių pardavimo platformų prekių rikiavimo modelių simuliacija
+# Bakalauro Darbas - Elektroninių pardavimo platformų prekių rikiavimo kriterijų modelių simuliacija
 
 Programa modeliuoja simuliacijos parametruose nurodytą kiekį apsilankymų kiekvienoje elektroninės prekybos platformoje ir taip įvertina prekių rikiavimo kriterijų modelius tarpusavyje, remiantis pirkėjų, pardavėjų ir savininkų modeliais.
 
