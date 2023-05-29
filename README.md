@@ -1,4 +1,6 @@
-# Bakalauro Darbas - Elektroninių pardavimo platformų prekių rikiavimo kriterijų modelių simuliacija
+# Bakalauro Darbas - "Prekių rikiavimo modeliavimas elektroninių platformų sistemose"
+
+## Elektroninių pardavimo platformų prekių rikiavimo kriterijų modelių simuliacija
 
 Programa modeliuoja simuliacijos parametruose nurodytą kiekį apsilankymų kiekvienoje elektroninės prekybos platformoje ir taip įvertina prekių rikiavimo kriterijų modelius tarpusavyje, remiantis pirkėjų, pardavėjų ir savininkų modeliais.
 
@@ -6,7 +8,7 @@ Simuliacija paremta realybe ir veikia tokiu principu: pirkėjas apsilanko visose
 patenkina jo norus, tuomet išsirenka pardavėją, iš kurio ketina šią prekę įsigyti ir galiausiai prekę
 nusiperka arba palieka platformą.
 
-# Pasileidimo instrukcija
+## Pasileidimo instrukcija
 
 1. Atsisiųsti „Java SE 11“ (ar naujesnę).
 2. Atsisiųsti „Git“.
